@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-BattleshipServer::Application.load_tasks
+BattleGameServer::Application.load_tasks
