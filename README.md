@@ -74,17 +74,26 @@ http://www.hasbrocom/commoninstruct/battleship.pdf
     miss?
     
 ### Game
-    :has_many users
+    belongs_to player1, :class_name => 'User', :foreign_key => 'player_id_1'
+    belongs_to player2, :class_name => 'User', :foreign_key => 'player_id_2'
     :has_many turns
-    first_player
     game_time
     winner
     awarded_coins
     
+### Comment
+    belongs_to user
+    belongs_to game
+    content
+    
 ### Turn
     (Full description of damage inflicted/received, etc.)
-    attacking_user  
-    cell  
+    belongs_to :user
+    belongs_to :game
+    row
+    col
     hit  
     sunk  
+    ship  
+    
     
