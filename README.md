@@ -29,3 +29,62 @@ http://www.hasbrocom/commoninstruct/battleship.pdf
   
 ###status  
   returns current board and hit/miss board  
+  
+- - -  
+
+## Structures
+
+### User  
+    first_name  
+    last_name  
+    avatar_name 
+    avatar_image
+    level                  
+    coins                  
+    battles_won            
+    battles_lost           
+    battles_tied           
+    experience_points     
+    available     
+    online              
+    gaming               
+    email                
+    admin  
+    All Other Devise Fields  
+    
+### Ship  
+    name  
+    size  
+    start_row
+    start_col
+    end_row
+    end_col
+    image
+    belongs_to :board
+
+### Board  
+    height  
+    width  
+    cells (double array)  
+    has_many ships  
+    
+### Cell
+    has_ship? 
+    hit?
+    miss?
+    
+### Game
+    :has_many users
+    :has_many turns
+    first_player
+    game_time
+    winner
+    awarded_coins
+    
+### Turn
+    (Full description of damage inflicted/received, etc.)
+    attacking_user  
+    cell  
+    hit  
+    sunk  
+    
