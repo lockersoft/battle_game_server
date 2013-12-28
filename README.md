@@ -96,4 +96,7 @@ http://www.hasbrocom/commoninstruct/battleship.pdf
     sunk  
     ship  
     
-    
+# Notes
+
+User makes themselves available to play or challenges a player
+Other player accepts challenge or chooses an available player to challenge

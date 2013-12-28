@@ -12,6 +12,7 @@ class Game < ActiveRecord::Base
   belongs_to :defend_board3, :class_name => 'Board', :foreign_key => 'defend_board_id_3'
   belongs_to :attack_board4, :class_name => 'Board', :foreign_key => 'attack_board_id_4'
   belongs_to :defend_board4, :class_name => 'Board', :foreign_key => 'defend_board_id_4'
+  
   has_many :turns
   has_many :comments
 end

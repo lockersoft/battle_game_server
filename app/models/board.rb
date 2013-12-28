@@ -1,8 +1,8 @@
 #require_relative "../../lib/assets/BoardCells"
 class Board < ActiveRecord::Base
   
-  WIDTH = 26    # The only way I could think to create during the serialize - can't pass args to the default object in the serialize method
-  HEIGHT = 26
+  WIDTH = 26    # The only way I could think to create during the serialize
+  HEIGHT = 26   # - can't pass args to the default object in the serialize method
   LETTERS = %w(A B C D E F G H I J K L M N O P Q R S T U V W X Y Z)
   
   class Cell
@@ -88,6 +88,7 @@ class Board < ActiveRecord::Base
   
   serialize :cells, Cells
   has_many :ships
+  has_many :games
   
   def position_ship( ship )
     cells.add_ship( ship )
