@@ -25,3 +25,4 @@ production:
   password: 
   pool: 5
   timeout: 5000
+  host: localhost
