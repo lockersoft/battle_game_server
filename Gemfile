@@ -52,7 +52,7 @@ end
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
 # Use unicorn as the app server
-group :production
+group :production do
   gem 'unicorn'
   gem 'mysql'
 end
