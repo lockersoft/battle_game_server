@@ -54,7 +54,7 @@ end
 # Use unicorn as the app server
 group :production do
   gem 'unicorn'
-  gem 'mysql'
+  gem 'mysql2'
 end
 
 # Use Capistrano for deployment
