@@ -1,0 +1,46 @@
+<h1>Players</h1>
+
+<table id="players" class="display players">
+ <thead>
+  <tr>
+    <th>&nbsp;</th>
+    <th>Avatar Name</th>
+    <th>Status</th>
+    <th>Battles Won</th>
+    <th>Battles Lost</th>
+    <th>Battles Tied</th>
+    <th>Level</th>
+    <th>XP</th>
+  </tr>
+ </thead> 
+  <tbody>
+<% @users.each do | user | %>
+  <tr>
+    <td>
+      <%= image_tag user.avatar_image %>
+    </td>
+    <td>
+      <%= user.avatar_name %>
+    </td>
+    <td>
+      <%= user.display_status %>
+    </td>
+    <td>
+      <%= user.battles_won %>
+    </td>
+    <td>
+      <%= user.battles_lost %>
+    </td>
+    <td>
+      <%= user.battles_tied %>
+    </td>
+    <td>
+      <%= user.level %>
+    </td>
+    <td>
+      <%= user.experience_points %>
+    </td>
+  </tr>
+<% end %>
+  </tbody>
+</table>

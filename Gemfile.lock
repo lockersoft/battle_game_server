@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/rweng/jquery-datatables-rails.git
+  revision: 44b0448193d4856847e47fb2a245bdd51a4bb2fa
+  specs:
+    jquery-datatables-rails (1.12.2)
+      jquery-rails
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -30,6 +37,9 @@ GEM
     arel (4.0.1)
     atomic (1.1.14)
     bcrypt-ruby (3.1.2)
+    bourbon (3.1.8)
+      sass (>= 3.2.0)
+      thor
     builder (3.1.4)
     capybara (2.1.0)
       mime-types (>= 1.16)
@@ -61,6 +71,8 @@ GEM
     jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
+    jquery-ui-rails (4.1.1)
+      railties (>= 3.1.0)
     json (1.8.1)
     kaminari (0.15.0)
       actionpack (>= 3.0.0)
@@ -161,11 +173,14 @@ PLATFORMS
 
 DEPENDENCIES
   api_docs
+  bourbon
   capybara (= 2.1.0)
   coffee-rails (~> 4.0.0)
   devise
   jbuilder (~> 1.2)
+  jquery-datatables-rails!
   jquery-rails
+  jquery-ui-rails
   kaminari
   mysql2
   nokogiri

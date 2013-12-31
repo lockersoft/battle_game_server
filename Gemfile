@@ -8,6 +8,7 @@ gem 'sqlite3'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
+gem 'bourbon'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -34,6 +35,8 @@ gem 'rabl'
 gem 'oj'
 gem 'nokogiri'
 gem 'kaminari'
+gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
+gem 'jquery-ui-rails'
 
 group :test, :development do
   gem 'rspec-rails', "~> 2.14"

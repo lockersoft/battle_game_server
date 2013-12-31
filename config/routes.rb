@@ -1,4 +1,6 @@
 BattleGameServer::Application.routes.draw do
+  get "users/index"
+  get "users/challenge"
   api_version(:module => "V1", :path => {:value => "api/v1"}, :default => true) do
   end
   devise_for :users
