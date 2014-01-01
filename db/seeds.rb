@@ -6,7 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-=begin
+
 dave = User.create( first_name:'Dave',
                     last_name: 'Jones',
                     avatar_name: 'Dr.Dave', 
@@ -16,7 +16,7 @@ dave = User.create( first_name:'Dave',
                     avatar_image: 'avatars/davejones.jpg'
                   )
 puts 'MAKE SURE TO CHANGE YOUR PASSWORD IN THE CONSOLE!!!'
-=end
+
 
 10.times do |n|
   test = User.create( first_name:'Test',
