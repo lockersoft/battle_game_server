@@ -24,7 +24,8 @@ puts 'MAKE SURE TO CHANGE YOUR PASSWORD IN THE CONSOLE!!!'
                       avatar_name: "Test#{n}", 
                       password:'changeme',
                       email:"test#{n}@lockersoft.com",
-                      admin:true,          
+                      admin:false,
+                      confirmed_at: Date.now
                     )
   puts test
   test.save!
