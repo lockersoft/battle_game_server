@@ -12,7 +12,8 @@ dave = User.create( first_name:'Dave',
                     avatar_name: 'Dr.Dave', 
                     password:'changeme',
                     email:'dave.jones@scc.spokane.edu',
-                    admin:true,          
+                    admin:true,    
+                    confirmed_at:Time.now,
                     avatar_image: 'avatars/davejones.jpg'
                   )
 puts 'MAKE SURE TO CHANGE YOUR PASSWORD IN THE CONSOLE!!!'
@@ -25,7 +26,7 @@ puts 'MAKE SURE TO CHANGE YOUR PASSWORD IN THE CONSOLE!!!'
                       password:'changeme',
                       email:"test#{n}@lockersoft.com",
                       admin:false,
-                      confirmed_at: Date.now
+                      confirmed_at: Time.now
                     )
   puts test
   test.save!
