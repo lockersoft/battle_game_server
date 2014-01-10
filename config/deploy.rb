@@ -1,10 +1,9 @@
-set :application, 'my_app_name'
-set :repo_url, 'git@example.com:me/my_repo.git'
-
+set :application, 'battle_game_server'
+set :repo_url, 'lockersoft@github.com/lockersoft/battle_game_server.git'
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
-# set :deploy_to, '/var/www/my_app'
-# set :scm, :git
+# set :deploy_to, '/home/rails/'
+set :scm, :git
 
 # set :format, :pretty
 # set :log_level, :debug
@@ -22,7 +21,7 @@ namespace :deploy do
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
       # Your restart mechanism here, for example:
-      # execute :touch, release_path.join('tmp/restart.txt')
+      execute 'service unicorn restart'
     end
   end
 
