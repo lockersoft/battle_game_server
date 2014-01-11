@@ -1,10 +1,16 @@
 set :application, 'battle_game_server'
-set :repo_url, 'lockersoft@github.com/lockersoft/battle_game_server.git'
-# ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
-
-# set :deploy_to, '/home/rails/'
+set :repository, 'git@github.com:lockersoft/battle_game_server.git'
+set :user, 'battleserver'
+set :deploy_to, '/home/rails/'
 set :scm, :git
+set :user_sudo, false
+set :rails_env, "production"
 
+default_run_options[:pty] = true
+
+role :web, "battleserver.com"
+role :app, "battleserver.com"
+role :db, "battleserver.com", :primary => true
 # set :format, :pretty
 # set :log_level, :debug
 # set :pty, true
