@@ -1,14 +1,18 @@
-set :application, 'battle_game_server'
+set :application, 'battlegameserver'
 set :repository, 'git@github.com:lockersoft/battle_game_server.git'
 set :repo_url, 'git@github.com:lockersoft/battle_game_server.git'
 
-set :user, 'battleserver'
-set :deploy_to, '/home/rails/'
+set :user, 'rails'
+set :deploy_to, '/home/rails'
 set :scm, :git
 set :user_sudo, false
+set :branch, "master"
 set :rails_env, "production"
+set :deploy_via, :copy
+set :keep_releases, 3
 
 default_run_options[:pty] = true
+
 
 role :web, "battleserver.com"
 role :app, "battleserver.com"
@@ -33,6 +37,7 @@ namespace :deploy do
     end
   end
   
+  desc 'Updated'
   task :updated do 
   end
 
