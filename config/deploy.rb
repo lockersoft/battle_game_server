@@ -2,23 +2,24 @@ set :application, 'battlegameserver'
 set :repository, 'git@github.com:lockersoft/battle_game_server.git'
 set :repo_url, 'git@github.com:lockersoft/battle_game_server.git'
 
-set :user, 'rails'
+set :user, 'battlegameserver'
 set :deploy_to, '/home/rails'
 set :scm, :git
-set :user_sudo, false
 set :branch, "master"
 set :rails_env, "production"
 set :deploy_via, :copy
 set :keep_releases, 3
 set :stages, %w(staging production)
 set :default_stage, "production"
+set :use_sudo, true
 
-default_run_options[:pty] = true
+#set :ssh_options, {
+#   verbose: :debug
+#}
 
-
-role :web, "battleserver.com"
-role :app, "battleserver.com"
-role :db, "battleserver.com", :primary => true
+role :web, "battlegameserver.com"
+role :app, "battlegameserver.com"
+role :db, "battlegameserver.com", :primary => true
 # set :format, :pretty
 # set :log_level, :debug
  set :pty, true
