@@ -10,6 +10,8 @@ set :branch, "master"
 set :rails_env, "production"
 set :deploy_via, :copy
 set :keep_releases, 3
+set :stages, %w(staging production)
+set :default_stage, "production"
 
 default_run_options[:pty] = true
 
