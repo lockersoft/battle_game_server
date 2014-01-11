@@ -23,7 +23,7 @@ production:
   encoding: utf8
   database: rails
   username: rails
-  password: 
+  password: rails
   pool: 5
   timeout: 5000
   hostname: localhost

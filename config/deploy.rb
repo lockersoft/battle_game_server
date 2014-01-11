@@ -2,7 +2,7 @@ set :application, 'battlegameserver'
 set :repository, 'git@github.com:lockersoft/battle_game_server.git'
 set :repo_url, 'git@github.com:lockersoft/battle_game_server.git'
 
-set :user, 'battlegameserver'
+set :user, 'root'
 set :deploy_to, '/home/rails'
 set :scm, :git
 set :branch, "master"
