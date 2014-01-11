@@ -33,7 +33,7 @@ namespace :deploy do
     end
   end
   
-  task :updated do
+  task :updated do 
   end
 
   after :restart, :clear_cache do
