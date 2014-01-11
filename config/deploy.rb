@@ -1,5 +1,7 @@
 set :application, 'battle_game_server'
 set :repository, 'git@github.com:lockersoft/battle_game_server.git'
+set :repo_url, 'git@github.com:lockersoft/battle_game_server.git'
+
 set :user, 'battleserver'
 set :deploy_to, '/home/rails/'
 set :scm, :git
@@ -27,9 +29,11 @@ namespace :deploy do
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      # Your restart mechanism here, for example:
-      execute 'service unicorn restart'
+      run 'service unicorn restart'
     end
+  end
+  
+  task :updated do
   end
 
   after :restart, :clear_cache do
