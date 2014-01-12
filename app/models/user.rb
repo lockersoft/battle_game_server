@@ -6,6 +6,10 @@ class User < ActiveRecord::Base
   
   has_many :games
   
+  def self.is_available?
+    where(available: true).where(online: true).where( gaming: false)
+  end
+  
   def is_available_to_play?
     return available && online && !gaming
   end

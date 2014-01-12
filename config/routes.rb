@@ -1,5 +1,6 @@
 BattleGameServer::Application.routes.draw do
   get "users/index"
+  get "users/available" => 'users#index', :defaults => { :available => '1' }
   get "users/challenge"
   api_version(:module => "V1", :path => {:value => "api/v1"}, :default => true) do
   end
@@ -9,7 +10,7 @@ BattleGameServer::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'welcome#index'
+  root 'users#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
