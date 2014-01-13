@@ -6,7 +6,7 @@ Battle Game Server for CIS 219 In-class lecture.  Has an API for use by other cl
 Will eventually be a "Battle" server for any type of turn based fighting game
 
 ## Official Rules for Battleship  
-http://www.hasbrocom/commoninstruct/battleship.pdf
+http://www.hasbro.com/commoninstruct/battleship.pdf
 
 
 ## API for Game Play between 2 clients  

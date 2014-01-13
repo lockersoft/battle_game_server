@@ -6,6 +6,10 @@ BattleGameServer::Application.routes.draw do
   end
   devise_for :users
   
+  get "games/new/:challenge" => "games#new", :as => 'game_new'
+  get "game/:id" => "games#show", :as => 'game'
+  get "games" => "games#index", :as => 'games_path'
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -1,2 +1,7 @@
-<h1>Users#challenge</h1>
-<p>Find me in app/views/users/challenge.html.erb</p>
+<h1><%= @user.avatar_name %> Challenges <%= @challenged.avatar_name %></h1>
+
+<h2>Your Attacking Board</h2>
+<%= display_board(@game.attack_board_id_1) %>
+
+<h2>Your Defending Board</h2>
+<%= display_board(@game.defend_board_id_1) %>

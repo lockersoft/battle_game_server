@@ -17,6 +17,9 @@
 <% @users.each do | user | %>
   <tr>
     <td>
+      <%= link_to "Challenge", game_new_path(challenge: user.id) %>
+    </td>
+    <td>
       <%= image_tag user.avatar_image %>
     </td>
     <td>
