@@ -1,0 +1,12 @@
+<p id="notice"><%= notice %></p>
+<h1><%= @user.avatar_name %> Challenges <%= @challenged.avatar_name %></h1>
+
+<h3><%= link_to "Default Ship Placement", game_default_path( @game, 5) %></h3>
+
+<h2>Your Attacking Board</h2>
+<%= display_board(@game.attack_board_id_1) %>
+
+<h2>Your Defending Board</h2>
+<%= display_board(@game.defend_board_id_1) %>
+
+<%= link_to 'Back', root_path %>

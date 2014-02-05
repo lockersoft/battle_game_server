@@ -35,7 +35,7 @@ gem 'rabl'
 gem 'oj'
 gem 'nokogiri'
 gem 'kaminari'
-gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
+gem 'jquery-datatables-rails'#, github: 'rweng/jquery-datatables-rails'
 gem 'jquery-ui-rails'
 
 group :test, :development do
