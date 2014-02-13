@@ -1,7 +1,15 @@
 class UsersController < ApplicationController
   before_filter :check_auth, :except => [:index]
-  respond_to :json, :xml, :html
+  respond_to :json, :xml, :html #, :except => :login
 
+  def login
+    if current_user
+      render json: '"success"'
+    else
+      render json: '"not authorized"'  # Probably never called as the server will reject bad passwords, etc.
+    end
+  end
+  
   def index
     @users = User.order( :available )
     @users = User.is_available? if params[:available]
