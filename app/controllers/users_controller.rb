@@ -4,14 +4,14 @@ class UsersController < ApplicationController
 
   def login
     if current_user
-      render json: '"success"'
+      respond_with User.select(:id,:first_name,:last_name,:avatar_name,:level,:coins,:battles_won,:battles_lost,:battles_tied,:experience_points,:available,:online,:gaming,:email,:avatar_image).find(current_user.id)
     else
       render json: '"not authorized"'  # Probably never called as the server will reject bad passwords, etc.
     end
   end
   
   def index
-    @users = User.order( :available )
+    @users = User.order( :available ).select( :id, :avatar_name, :level, :battles_won, :battles_lost, :battles_tied, :available, :online, :gaming, :avatar_image )
     @users = User.is_available? if params[:available]
     respond_with @users
   end
@@ -29,6 +29,7 @@ class UsersController < ApplicationController
         defend_board_id_1:defendboard_1.id,
         defend_board_id_2:defendboard_2.id,
         coins: 100      # TODO:  Assign coins to different types of games.
+                        # TODO:  Apportion out based on relative damage to each side
     )
   end
   
