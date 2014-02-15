@@ -4,14 +4,14 @@ class UsersController < ApplicationController
 
   def login
     if current_user
-      respond_with User.select(:id,:first_name,:last_name,:avatar_name,:level,:coins,:battles_won,:battles_lost,:battles_tied,:experience_points,:available,:online,:gaming,:email,:avatar_image).find(current_user.id)
+      respond_with User.get_profile(current_user.id)
     else
-      render json: '"not authorized"'  # Probably never called as the server will reject bad passwords, etc.
+      render json: '"not authorized"'  # Probably never called as the server will reject bad passwords, etc. at a lower level
     end
   end
   
   def index
-    @users = User.order( :available ).select( :id, :avatar_name, :level, :battles_won, :battles_lost, :battles_tied, :available, :online, :gaming, :avatar_image )
+    @users = User.display_available
     @users = User.is_available? if params[:available]
     respond_with @users
   end
