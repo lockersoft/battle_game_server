@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  before_action :set_game, only: [:show, :edit, :update, :destroy, :default]
+  before_action :set_game, only: [:show, :edit, :update, :destroy, :default, :clear_board]
 
   # GET /games
   # GET /games.json
@@ -39,6 +39,13 @@ class GamesController < ApplicationController
       end
     end
   end
+  
+  # GET /games/:id/clear
+  def clear_board
+    @board = Board.find(@game.defend_board_id_1)
+    @board.clear
+    redirect_to @game
+  end
 
   # GET /games/default/:id(/:placement_num)
   def default
@@ -49,12 +56,13 @@ class GamesController < ApplicationController
     #t.integer  "direction"
     #t.string   "image"
     defend_board = Board.find_by_id( @game.defend_board_id_1 )
-    defend_board.ships.create(name:'Destroyer', size:2, start_row: 5, start_col:5, direction:0)
-    defend_board.ships.create(name:'Submarine', size:3, start_row: 2, start_col:2, direction:4)
-
-    defend_board.ships.create(name:'Cruiser', size:3, start_row: 2, start_col:5, direction:3)
-    defend_board.ships.create(name:'Battleship', size:4, start_row: 9, start_col:5, direction:6)
-    defend_board.ships.create(name:'Carrier', size:5, start_row: 2, start_col:2, direction:4)
+    #defend_board.ships.create(name:'Destroyer', size:2, start_row: 5, start_col:5, direction:0)
+    #defend_board.ships.create(name:'Submarine', size:3, start_row: 2, start_col:2, direction:4)
+    #
+    #defend_board.ships.create(name:'Cruiser', size:3, start_row: 2, start_col:5, direction:3)
+    #defend_board.ships.create(name:'Battleship', size:4, start_row: 9, start_col:5, direction:6)
+    
+    defend_board.ships.create(name:'Carrier', size:5, start_row: 4, start_col:4, direction:1)
     
     redirect_to game_path( @game ), notice: 'Default placement set.'
   end

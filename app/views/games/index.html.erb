@@ -3,8 +3,8 @@
 <table>
   <thead>
     <tr>
-      <th></th>
-      <th></th>
+      <th>Attacker</th>
+      <th>Defender</th>
       <th></th>
     </tr>
   </thead>
@@ -12,9 +12,9 @@
   <tbody>
     <% @games.each do |game| %>
       <tr>
+        <td><%= game.player1.avatar_name %></td>
+        <td><%= game.player2.avatar_name %></td>
         <td><%= link_to 'Show', game %></td>
-        <td><%= link_to 'Edit', edit_game_path(game) %></td>
-        <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -22,4 +22,3 @@
 
 <br>
 
-<%= link_to 'New Game', new_game_path %>

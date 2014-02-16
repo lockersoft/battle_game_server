@@ -11,6 +11,10 @@ class Board < ActiveRecord::Base
     attr_accessor :has_ship, :hit, :miss
 
     def initialize
+      clear_cell
+    end
+    
+    def clear_cell
       @has_ship = false
       @hit      = false
       @miss     = false
@@ -103,8 +107,8 @@ class Board < ActiveRecord::Base
     cells.content.each_with_index do |row, i|
       break if i >= width
       ret_str += LETTERS[i] + " "
-      row.each_with_index do |col, i|
-        break if i >= height
+      row.each_with_index do |col, j|
+        break if j >= height
         ret_str += "| #{col} "
       end
       ret_str += "|\n"
@@ -113,7 +117,17 @@ class Board < ActiveRecord::Base
     return ret_str
   end
 
-
+  def clear
+    cells.content.each_with_index do |row, ri|
+      break if ri >= width
+      row.each_with_index do |col, ci|
+        break if ci >= height
+        cells.content[ri][ci].clear_cell
+      end
+    end
+    save!
+  end
+  
   private
   def default_values
     self.width  ||= 10
