@@ -1,8 +1,9 @@
 class GamesController < ApplicationController
   before_action :set_game, only: [:show, :edit, :update, :destroy, 
-                                  :default, :clear_board, :add_ship
+                                  :default, :clear_board, :add_ship,
+                                  :get_board
                                  ]
-
+  respond_to :html, :json
   # GET /games
   # GET /games.json
   def index
@@ -42,6 +43,15 @@ class GamesController < ApplicationController
     end
   end
   
+  # GET /game/:id/:board
+  def get_board
+    @board_type = params[:board].downcase
+    if @board_type == "defend" || @board_type == "attack"
+      @board = Board.find( eval( "@game." + @board_type + "_board_id_1" ))      
+    end
+    respond_with @board
+  end
+  
   # GET /games/:id/clear
   def clear_board
     @board = Board.find(@game.defend_board_id_1)
@@ -54,20 +64,14 @@ class GamesController < ApplicationController
     defend_board = Board.find_by_id( @game.defend_board_id_1 )
     defend_board.ships.create(name:'Carrier', 
                               size: params[:size], 
-                              start_row: params[:row], 
-                              start_col: params[:col], 
+                              start_row: params[:row].to_i - 1, 
+                              start_col: params[:col].to_i - 1, 
                               direction: params[:direction])
     redirect_to game_path( @game ), notice: 'Ship Added.'
   end
   
   # GET /games/default/:id(/:placement_num)
   def default
-    #t.string   "name"
-    #t.integer  "size"
-    #t.integer  "start_row"
-    #t.integer  "start_col"
-    #t.integer  "direction"
-    #t.string   "image"
     defend_board = Board.find_by_id( @game.defend_board_id_1 )
     #defend_board.ships.create(name:'Destroyer', size:2, start_row: 5, start_col:5, direction:0)
     #defend_board.ships.create(name:'Submarine', size:3, start_row: 2, start_col:2, direction:4)
@@ -112,6 +116,6 @@ class GamesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def game_params
-      params.permit(:size, :direction, :row, :col)
+      params.permit(:size, :direction, :row, :col, :board)
     end
 end
