@@ -1,5 +1,7 @@
 class GamesController < ApplicationController
-  before_action :set_game, only: [:show, :edit, :update, :destroy, :default, :clear_board]
+  before_action :set_game, only: [:show, :edit, :update, :destroy, 
+                                  :default, :clear_board, :add_ship
+                                 ]
 
   # GET /games
   # GET /games.json
@@ -47,6 +49,17 @@ class GamesController < ApplicationController
     redirect_to @game
   end
 
+  # GET /game/:id/add_ship/:ship/:row/:col/:size/:direction
+  def add_ship   
+    defend_board = Board.find_by_id( @game.defend_board_id_1 )
+    defend_board.ships.create(name:'Carrier', 
+                              size: params[:size], 
+                              start_row: params[:row], 
+                              start_col: params[:col], 
+                              direction: params[:direction])
+    redirect_to game_path( @game ), notice: 'Ship Added.'
+  end
+  
   # GET /games/default/:id(/:placement_num)
   def default
     #t.string   "name"
@@ -99,6 +112,6 @@ class GamesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def game_params
-      params[:game]
+      params.permit(:size, :direction, :row, :col)
     end
 end

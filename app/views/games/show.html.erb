@@ -3,6 +3,7 @@
 
 <h3><%= link_to "Default Ship Placement", game_default_path( @game, 5) %></h3>
 <h3><%= link_to "Clear Defending Board", clear_board_path( @game ) %></h3>
+<h3><%= link_to "Add Ship", add_ship_path( @game, :ship=>1, :size=>5, :direction=>0, :row=>5, :col=>5 ) %></h3>
 
 <h2>Your Attacking Board</h2>
 <%= display_board(@game.attack_board_id_1) %>

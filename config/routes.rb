@@ -13,10 +13,8 @@ BattleGameServer::Application.routes.draw do
   get "games" => "games#index", :as => 'games_path'
   get "game/default/:id(/:placement_num)" => "games#default", :as => 'game_default'
   get "game/:id/clear_board" => "games#clear_board", :as => 'clear_board'
+  get "game/:id/add_ship/:ship/:row/:col/:size/:direction" => "games#add_ship", :as => 'add_ship'
   
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
-
   # You can have the root of your site routed with "root"
   root 'users#index'
 

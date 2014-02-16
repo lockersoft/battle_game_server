@@ -50,7 +50,7 @@ class Board < ActiveRecord::Base
 
         when 1 # North East
           row_dir = -1
-          col_dir = -1
+          col_dir = 1
 
         when 2 # East 
           col_dir = 1
