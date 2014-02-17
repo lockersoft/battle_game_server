@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   
   def index
     @users = User.display_available
-    @users = User.is_available? if params[:available]
+    @users = User.all_available if params[:available]
     respond_with @users
   end
   

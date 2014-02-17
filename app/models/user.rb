@@ -6,6 +6,10 @@ class User < ActiveRecord::Base
   
   has_many :games
   
+  def avatar_url
+    "#{$custom_host}/#{avatar_image}"  # TODO: use this instead of avatar_name
+  end
+  
   def self.get_profile( id )
     select(:id,:first_name,:last_name,:avatar_name,:level,:coins,:battles_won,:battles_lost,:battles_tied,:experience_points,:available,:online,:gaming,:email,:avatar_image).find(id)    
   end
@@ -15,8 +19,8 @@ class User < ActiveRecord::Base
     
   end
   
-  def self.is_available?
-    where(available: true).where(online: true).where( gaming: false)
+  def self.all_available
+    where(available: true).where(online: true).where( gaming: false).all
   end
   
   def is_available_to_play?

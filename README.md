@@ -10,6 +10,29 @@ http://www.hasbro.com/commoninstruct/battleship.pdf
 
 
 ## API for Game Play between 2 clients  
+### API Version 1
+All API calls must be prefixed with /api/v1/XXX
+
+### login  
+Uses basic authentication to login to the server  
+#### returns: Your user profile as a JSON object:  
+    {
+    id: 1,
+    first_name: "Dave",
+    last_name: "Jones",
+    avatar_name: "Dr.Dave",
+    level: 1,
+    coins: 0,
+    battles_won: 0,
+    battles_lost: 0,
+    battles_tied: 0,
+    experience_points: 0,
+    available: false,
+    online: false,
+    gaming: false,
+    email: "dave@lockersoft.com",
+    avatar_image: "avatars/davejones.jpg"
+    }
 
 ###available_players  
   returns list of available players  
