@@ -18,9 +18,10 @@ class GamesController < ApplicationController
   end
 
   # GET /games/new
+  # GET /challenge
   def new
     @user = current_user
-    @challenged = User.find_by_id( params[:challenge] )
+    @challenged = User.find_by_id( params[:challenge] )  # TODO:  if ID is 0, then the other user will be the computer
     attackboard_1 = Board.create(width:10, height:10)
     attackboard_2 = Board.create(width:10, height:10)
     defendboard_1 = Board.create(width:10, height:10)
@@ -31,7 +32,9 @@ class GamesController < ApplicationController
         defend_board_id_1:defendboard_1.id,
         defend_board_id_2:defendboard_2.id,
         coins: 100      # TODO:  Assign coins to different types of games.
+                        # TODO:  Apportion out based on relative damage to each side
     )
+    
     respond_to do |format|
       if @game.save
         format.html { redirect_to game_path(@game), notice: 'Game was successfully created.' }
@@ -59,14 +62,21 @@ class GamesController < ApplicationController
     redirect_to @game
   end
 
-  # GET /game/:id/add_ship/:ship/:row/:col/:size/:direction
-  def add_ship   
-    defend_board = Board.find_by_id( @game.defend_board_id_1 )
-    defend_board.ships.create(name:'Carrier', 
-                              size: params[:size], 
+  # GET /game/:id/add_ship/:ship/:row/:col/:direction
+  def add_ship
+    # Get the user to find the right board to modify.
+    if( @game.player1 == current_user)
+      defend_board = Board.find_by_id( @game.defend_board_id_1 )
+    else
+      defend_board = Board.find_by_id( @game.defend_board_id_2 )
+    end
+    ship = params[:ship]
+    defend_board.ships.create(name: ship.to_s, 
+                              size: $available_ships[ ship ], 
                               start_row: params[:row].to_i - 1, 
                               start_col: params[:col].to_i - 1, 
                               direction: params[:direction])
+    
     redirect_to game_path( @game ), notice: 'Ship Added.'
   end
   

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131226215813) do
+ActiveRecord::Schema.define(version: 20140222225515) do
 
   create_table "boards", force: true do |t|
     t.string   "cells"
@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(version: 20131226215813) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "avatar_image",           default: "avatars/unknown.jpg"
+    t.boolean  "computer",               default: false
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true

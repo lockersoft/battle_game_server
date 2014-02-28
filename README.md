@@ -1,7 +1,7 @@
 Battle Game Server
 =================
 
-Battle Game Server for CIS 219 In-class lecture.  Has an API for use by other clients, especially Android clients, that will allow players to connect and play each other or alternatively play against  the "computer" which will be the server.
+Battle Game Server for CIS 219 Mobile III In-class lecture.  Has an API for use by other clients, especially Android clients, that will allow players to connect and play each other or alternatively play against  the "computer" which will be the server.
 
 Will eventually be a "Battle" server for any type of turn based fighting game
 
@@ -84,6 +84,14 @@ Uses basic authentication to login to the server
     end_col
     image
     belongs_to :board
+
+### Available Ships:  
+    carrier: 5,
+    battleship: 4,
+    cruiser: 3,
+    submarine: 3,
+    destroyer: 2
+
 
 ### Board  
     height  
