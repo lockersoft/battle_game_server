@@ -7,10 +7,11 @@ BattleGameServer::Application.routes.draw do
   api_version(:module => "V1", :path => {:value => "api/v1"}, :default => true) do
   end
   
-  scope "/api/v1" do 
-    get "login" => 'users#login', :defaults => {:format => :json}
-    get "available_users" => 'users#index', :defaults => {:format => :json, :available => '1'}
-    get "all_users" => 'users#index', :defaults => {:format => :json}
+  devise_scope :user do 
+    get "api/v1/login" => 'users#login', :defaults => {:format => :json}
+    get "api/v1/available_users" => 'users#index', :defaults => {:format => :json, :available => '1'}
+    get "api/v1/all_users" => 'users#index', :defaults => {:format => :json}
+    get "api/v1/logout" => "devise/sessions#destroy", :defaults => {:method => 'delete'}
   end
   
   devise_for :users

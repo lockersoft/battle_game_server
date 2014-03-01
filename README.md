@@ -14,7 +14,9 @@ http://www.hasbro.com/commoninstruct/battleship.pdf
 All API calls must be prefixed with /api/v1/XXX
 
 ### login  
+/api/v1/login(.:format)  
 Uses basic authentication to login to the server  
+
 #### returns: Your user profile as a JSON object:  
     {
     id: 1,
@@ -34,8 +36,19 @@ Uses basic authentication to login to the server
     avatar_image: "avatars/davejones.jpg"
     }
 
+### logout  
+GET /api/v1/logout(.:format)  
+Logs the user out from the server  
+
 ###available_players  
+GET /api/v1/available_users(.:format)  
   returns list of available players  
+
+###all_users
+/api/v1/all_users(.:format)      
+  returns list of ALL players whether they are available or not
+
+#All API's below are NOT YET IMPLEMENTED
 
 ###challenge_player  
   returns acceptance?  
