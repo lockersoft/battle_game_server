@@ -17,16 +17,28 @@ class GamesController < ApplicationController
     @challenged = @game.player2
   end
 
+  # GET available_ships
+  def available_ships
+    respond_with $available_ships
+  end
+  
+  # GET available_directions
+  def available_directions
+    respond_with $available_directions
+  end
+  
   # GET /games/new
   # GET /challenge
+  # GET /api/v1/challenge_computer
   def new
     @user = current_user
-    @challenged = User.find_by_id( params[:challenge] )  # TODO:  if ID is 0, then the other user will be the computer
+    @challenged = params[:computer] ? 0 : User.find_by_id( params[:challenge] ).id
+
     attackboard_1 = Board.create(width:10, height:10)
     attackboard_2 = Board.create(width:10, height:10)
     defendboard_1 = Board.create(width:10, height:10)
     defendboard_2 = Board.create(width:10, height:10)
-    @game = Game.new( player_id_1:@user.id, player_id_2:@challenged.id,
+    @game = Game.new( player_id_1:@user.id, player_id_2:@challenged,
         attack_board_id_1:attackboard_1.id,
         attack_board_id_2:attackboard_2.id,
         defend_board_id_1:defendboard_1.id,
@@ -38,7 +50,7 @@ class GamesController < ApplicationController
     respond_to do |format|
       if @game.save
         format.html { redirect_to game_path(@game), notice: 'Game was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @game }
+        format.json { render json: {"game_id" => @game.id } }
       else
         format.html { render action: 'new' }
         format.json { render json: @game.errors, status: :unprocessable_entity }
@@ -62,7 +74,7 @@ class GamesController < ApplicationController
     redirect_to @game
   end
 
-  # GET /game/:id/add_ship/:ship/:row/:col/:direction
+  #          
   def add_ship
     # Get the user to find the right board to modify.
     if( @game.player1 == current_user)

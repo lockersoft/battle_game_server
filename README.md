@@ -44,9 +44,41 @@ Logs the user out from the server
 GET /api/v1/available_users(.:format)  
   returns list of available players  
 
-###all_users
-/api/v1/all_users(.:format)      
+###all_users  
+/api/v1/all_users(.:format)  
   returns list of ALL players whether they are available or not
+
+###available_ships  
+/api/v1/available_ships  
+####returns a list of all of the available ships names and their respective sizes.  
+    {
+    "carrier":5,
+    "battleship":4,
+    "cruiser":3,
+    "submarine":3,
+    "destroyer":2
+    }
+
+###available_directions  
+/api/v1/available_directions  
+####returns a list of all of the available ships names and their respective sizes.  
+    {
+    "north":0,
+    "east":2,
+    "south":4,
+    "west":6
+    }
+
+##challenge_computer  
+api/v1/challenge_computer  
+###returns the game id which is used in future calls
+    {
+    "game_id":7
+    }
+
+##add_ship  
+api/v1/game/:id/add_ship/:ship/:row/:col/:direction  
+e.g.  /api/v1/game/7/add_ship/carrier/b/8/0.json
 
 #All API's below are NOT YET IMPLEMENTED
 
