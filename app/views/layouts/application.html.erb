@@ -11,7 +11,15 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
+<nav>
+  <% if current_user %>
+    <%= link_to "Logout", destroy_user_session_path, :method => :delete %> &nbsp;
+  <% else %>
+    <%= link_to "Login", new_user_session_path %> &nbsp;
+  <% end %>
+  <%= link_to "Register", new_user_registration_path %> &nbsp;
+  
+</nav>
 <p class="notice"><%= notice %></p>
 <p class="alert"><%= alert %></p>
 
