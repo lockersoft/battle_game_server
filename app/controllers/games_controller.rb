@@ -49,6 +49,24 @@ class GamesController < ApplicationController
     
     respond_to do |format|
       if @game.save
+        # Add the ships to the computer's board if necessary
+        defend_board = Board.find_by_id( @game.defend_board_id_2 )    # Computer's defending board.
+        $available_ships.each do | ship_name, size |
+          row = rand(0..9)    # TODO: remove hard coded range
+          col = rand(0..9)
+          dir = $available_directions.values.sample
+          while( ! defend_board.check_ship_placement(size,row,col,dir) )
+            row = rand(0..9)    # TODO: remove hard coded range
+            col = rand(0..9)
+            dir = $available_directions.values.sample
+          end
+          defend_board.ships.create(name: ship_name, 
+                                    size: size, 
+                                    start_row: row, 
+                                    start_col: col, 
+                                    direction: dir )
+        end
+        
         format.html { redirect_to game_path(@game), notice: 'Game was successfully created.' }
         format.json { render json: {"game_id" => @game.id } }
       else

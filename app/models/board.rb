@@ -13,7 +13,7 @@ class Board < ActiveRecord::Base
     def initialize
       clear_cell
     end
-    
+
     def clear_cell
       @has_ship = false
       @hit      = false
@@ -90,7 +90,21 @@ class Board < ActiveRecord::Base
       s.board.save!
       # TODO: Bounds checking for ships
     end
+    
+    def check_ship_placement( size, row, col, dir )
+      row_dir, col_dir = calculate_direction( dir )
+      valid = true
+      size.times do
+        if( row > 9 || row < 0 || col > 9 || col < 0 || @content[row][col].has_ship) #TODO: replace hard-coded 10
+          valid = false
+        end
+        row                         += row_dir
+        col                         += col_dir        
+      end
+      return valid
+    end
   end
+  
 
   serialize :cells, Cells
   has_many :ships
@@ -99,7 +113,12 @@ class Board < ActiveRecord::Base
   def position_ship(ship)
     cells.add_ship(ship)
   end
-
+  
+  # Return true/false whether the ship can be placed at those coordinates.
+  def check_ship_placement( size, row, col, dir )
+    return cells.check_ship_placement( size, row, col, dir)
+  end
+  
   def to_s
     ret_str = "  "
     1.upto(width) { |n| ret_str += "#{n}".center(4, " ") }
@@ -127,7 +146,7 @@ class Board < ActiveRecord::Base
     end
     save!
   end
-  
+
   private
   def default_values
     self.width  ||= 10
