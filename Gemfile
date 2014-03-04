@@ -37,6 +37,7 @@ gem 'nokogiri'
 gem 'kaminari'
 gem 'jquery-datatables-rails'#, github: 'rweng/jquery-datatables-rails'
 gem 'jquery-ui-rails'
+gem 'paperclip'
 
 group :development do
   gem "better_errors"
