@@ -50,7 +50,7 @@ class GamesController < ApplicationController
     respond_to do |format|
       if @game.save
         # Add the ships to the computer's board if necessary
-        defend_board = Board.find_by_id( @game.defend_board_id_2 )    # Computer's defending board.
+        defend_board = Board.find_by_id( @game.defend_board_id_2 )    # Randomize the Computer's defending board.
         $available_ships.each do | ship_name, size |
           row = rand(0..9)    # TODO: remove hard coded range
           col = rand(0..9)
@@ -117,10 +117,10 @@ class GamesController < ApplicationController
         defend_board.position_ship(ship)  
         
         format.html { redirect_to game_path(@game), notice: "#{ship.name} Ship Added." }
-        format.json { render json: {"game_id" => @game.id, "status" => '#{ship.name} ship added' } }
+        format.json { render json: {"game_id" => @game.id, "status" => "#{ship.name} ship added" } }
       else
         format.html { redirect_to game_path(@game), notice: "Illegal Ship Placement." }
-        format.json { render json: '"illegal ship placement"', status: :unprocessable_entity }
+        format.json { render json: { "error" => "illegal ship placement" } }
       end
     end
     

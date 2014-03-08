@@ -10,14 +10,14 @@ http://www.hasbro.com/commoninstruct/battleship.pdf
 
 
 ## API for Game Play between 2 clients  
-### API Version 1
+## API Version 1
 All API calls must be prefixed with /api/v1/XXX
 
-### login  
-/api/v1/login(.:format)  
+## login  
+GET /api/v1/login(.:format)  
 Uses basic authentication to login to the server  
 
-#### returns: Your user profile as a JSON object:  
+### returns: Your user profile as a JSON object:  
     {
     id: 1,
     first_name: "Dave",
@@ -36,21 +36,21 @@ Uses basic authentication to login to the server
     avatar_image: "avatars/davejones.jpg"
     }
 
-### logout  
+## logout  
 GET /api/v1/logout(.:format)  
 Logs the user out from the server  
 
-###available_players  
+##available_players  
 GET /api/v1/available_users(.:format)  
   returns list of available players  
 
-###all_users  
-/api/v1/all_users(.:format)  
+##all_users  
+GET /api/v1/all_users(.:format)  
   returns list of ALL players whether they are available or not
 
-###available_ships  
-/api/v1/available_ships  
-####returns a list of all of the available ships names and their respective sizes.  
+##available_ships  
+GET /api/v1/available_ships  
+###returns a list of all of the available ships names and their respective sizes.  
     {
     "carrier":5,
     "battleship":4,
@@ -59,9 +59,9 @@ GET /api/v1/available_users(.:format)
     "destroyer":2
     }
 
-###available_directions  
-/api/v1/available_directions  
-####returns a list of all of the available directions for placing ships.  
+##available_directions  
+GET /api/v1/available_directions  
+###returns a list of all of the available directions for placing ships.  
     {
     "north":0,
     "east":2,
@@ -70,15 +70,22 @@ GET /api/v1/available_users(.:format)
     }
 
 ##challenge_computer  
-api/v1/challenge_computer  
-###returns the game id which is used in future calls
+GET api/v1/challenge_computer  
+###returns the game id which is used in future calls  
     {
     "game_id":7
     }
 
 ##add_ship  
-api/v1/game/:id/add_ship/:ship/:row/:col/:direction  
+GET api/v1/game/:id/add_ship/:ship/:row/:col/:direction  
 e.g.  /api/v1/game/7/add_ship/carrier/b/8/0.json
+####Success:  
+    {"game_id":7,"status":"carrier ship added"}
+
+####ERROR:  
+    {"error":"illegal ship placement"}
+    
+- - -  
 
 #All API's below are NOT YET IMPLEMENTED
 
