@@ -1,14 +1,14 @@
 #require_relative "../../lib/assets/BoardCells"
 class Board < ActiveRecord::Base
 
-  before_create :default_values
+  #before_create :default_values
 
   WIDTH   = 26 # The only way I could think to create during the serialize
   HEIGHT  = 26 # - can't pass args to the default object in the serialize method
   LETTERS = %w(A B C D E F G H I J K L M N O P Q R S T U V W X Y Z)
 
   class Cell
-    attr_accessor :has_ship, :hit, :miss
+    attr_accessor :hit, :miss, :has_ship
 
     def initialize
       clear_cell
@@ -20,6 +20,10 @@ class Board < ActiveRecord::Base
       @miss     = false
     end
 
+    def has_ship?
+      return @has_ship
+    end
+    
     def to_s
       if @has_ship
         "S"
@@ -95,11 +99,12 @@ class Board < ActiveRecord::Base
       row_dir, col_dir = calculate_direction( dir )
       valid = true
       size.times do
-        if( row > 9 || row < 0 || col > 9 || col < 0 || @content[row][col].has_ship) #TODO: replace hard-coded 10
+        if( row > 9 || row < 0 || col > 9 || col < 0 || @content[row][col].has_ship?) #TODO: replace hard-coded 10
           valid = false
+          #break
         end
-        row                         += row_dir
-        col                         += col_dir        
+        row += row_dir
+        col += col_dir        
       end
       return valid
     end

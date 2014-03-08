@@ -60,11 +60,12 @@ class GamesController < ApplicationController
             col = rand(0..9)
             dir = $available_directions.values.sample
           end
-          defend_board.ships.create(name: ship_name, 
+          ship = defend_board.ships.create(name: ship_name, 
                                     size: size, 
                                     start_row: row, 
                                     start_col: col, 
                                     direction: dir )
+          defend_board.position_ship(ship)
         end
         
         format.html { redirect_to game_path(@game), notice: 'Game was successfully created.' }
@@ -100,14 +101,29 @@ class GamesController < ApplicationController
     else
       defend_board = Board.find_by_id( @game.defend_board_id_2 )
     end
-    ship = params[:ship]
-    defend_board.ships.create(name: ship.to_s, 
-                              size: $available_ships[ ship ], 
-                              start_row: params[:row].to_i - 1, 
-                              start_col: params[:col].to_i - 1, 
-                              direction: params[:direction])
+
+    respond_to do |format|
+      row = params[:row].downcase.ord - 'a'.ord     # Convert row letter into array number
+      col = params[:col].to_i - 1
+      dir = params[:direction].to_i
+      ship = params[:ship].to_sym
+      if( defend_board.check_ship_placement( $available_ships[ ship ],row, col, dir) )
+        ship = defend_board.ships.create(name: ship,
+                                  size: $available_ships[ ship ],
+                                  start_row: row,
+                                  start_col: col,
+                                  direction: dir )
+        ship.save
+        defend_board.position_ship(ship)  
+        
+        format.html { redirect_to game_path(@game), notice: "#{ship.name} Ship Added." }
+        format.json { render json: {"game_id" => @game.id, "status" => '#{ship.name} ship added' } }
+      else
+        format.html { redirect_to game_path(@game), notice: "Illegal Ship Placement." }
+        format.json { render json: '"illegal ship placement"', status: :unprocessable_entity }
+      end
+    end
     
-    redirect_to game_path( @game ), notice: 'Ship Added.'
   end
   
   # GET /games/default/:id(/:placement_num)

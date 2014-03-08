@@ -61,7 +61,7 @@ GET /api/v1/available_users(.:format)
 
 ###available_directions  
 /api/v1/available_directions  
-####returns a list of all of the available ships names and their respective sizes.  
+####returns a list of all of the available directions for placing ships.  
     {
     "north":0,
     "east":2,
