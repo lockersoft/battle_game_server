@@ -1,4 +1,4 @@
-Battle Game Server
+#Battle Game Server
 =================
 
 Battle Game Server for CIS 219 Mobile III In-class lecture.  Has an API for use by other clients, especially Android clients, that will allow players to connect and play each other or alternatively play against  the "computer" which will be the server.
@@ -10,7 +10,7 @@ http://www.hasbro.com/commoninstruct/battleship.pdf
 
 
 ## API for Game Play between 2 clients  
-## API Version 1
+## API Version 1  
 All API calls must be prefixed with /api/v1/XXX  
 ![API Actions and Return Results](http://battlegameserver.com/api_graph.png)  
 [API Actions and Return Results](http://battlegameserver.com/api_graph.pdf)  
@@ -104,6 +104,21 @@ GET api/v1/game/34/attack/h/3.json
     "comp_hit":false
     }
 
+##status  
+Get the status of the boards and turns  
+GET api/v1/game/42/status/(type).json  
+all => return both boards
+defend => return defending board
+attack => return attacking board
+turn => NOT YET IMPLEMENTED
+####returns a string representing the board status with S for a ship, - for a Miss, * for a Hit.  
+    {
+    "game_id":42,
+    "attack_board":
+        "          \n          \n          \n          \n          \n          \n          \n          \n          \n          \n",
+    "defend_board":
+        "        S \n       S  \n  S  SS   \n  S  SS   \n  S SS S  \n     S    \n          \n          \n          \n  SSSS    \n"
+    }
 - - -  
 
 #All API's below are NOT YET IMPLEMENTED
@@ -116,10 +131,7 @@ GET api/v1/game/34/attack/h/3.json
   
 ###setup_board  
   send initial board setup from client
-    
-###status  
-  returns attacking board and defending board  
-  
+      
 - - -  
 
 ## Structures

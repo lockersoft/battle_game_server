@@ -1,7 +1,7 @@
 class GamesController < ApplicationController
   before_action :set_game, only: [:show, :edit, :update, :destroy,
                                   :default, :clear_board, :add_ship,
-                                  :get_board, :attack
+                                  :get_board, :attack, :status
                                  ]
   respond_to :html, :json
   # GET /games
@@ -96,6 +96,31 @@ class GamesController < ApplicationController
         format.html { render action: 'new' }
         format.json { render json: @game.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+
+  # GET /game/:id/status/:type
+  def status
+    @type              = params[:type]
+    @user_defend_board = Board.find_by_id(@game.defend_board_id_1)
+    @user_attack_board = Board.find_by_id(@game.attack_board_id_1)
+
+    case @type
+      when "all"
+        @defend_board = @user_defend_board.to_simple_string
+        @attack_board = @user_attack_board.to_simple_string
+        render json: { :game_id => @game.id, :attack_board => @attack_board, :defend_board => @defend_board }
+      when "defend"
+        @defend_board = @user_defend_board.to_simple_string
+        render json: { :game_id => @game.id, :defend_board => @defend_board }
+      when "attack"
+        @attack_board = @user_attack_board.to_simple_string
+        render json: { :game_id => @game.id, :attack_board => @attack_board }
+      when "turn"
+        render json: { :error => "not yet implemented" }
+      else
+        render json: { :error => "unknown status type" }
     end
   end
 
@@ -196,13 +221,11 @@ class GamesController < ApplicationController
   # GET /games/default/:id(/:placement_num)
   def default
     defend_board = Board.find_by_id(@game.defend_board_id_1)
-    #defend_board.ships.create(name:'Destroyer', size:2, start_row: 5, start_col:5, direction:0)
-    #defend_board.ships.create(name:'Submarine', size:3, start_row: 2, start_col:2, direction:4)
-    #
-    #defend_board.ships.create(name:'Cruiser', size:3, start_row: 2, start_col:5, direction:3)
-    #defend_board.ships.create(name:'Battleship', size:4, start_row: 9, start_col:5, direction:6)
-
-    defend_board.ships.create(name: 'Carrier', size: 5, start_row: 4, start_col: 4, direction: 1)
+    defend_board.ships.create(name: 'Destroyer', size: 2, start_row: 5, start_col: 5, direction: 0)
+    defend_board.ships.create(name: 'Submarine', size: 3, start_row: 3, start_col: 3, direction: 4)
+    defend_board.ships.create(name: 'Cruiser', size: 3, start_row: 8, start_col: 5, direction: 0)
+    defend_board.ships.create(name: 'Battleship', size: 4, start_row: 7, start_col: 8, direction: 6)
+    defend_board.ships.create(name: 'Carrier', size: 5, start_row: 1, start_col: 8, direction: 4)
 
     redirect_to game_path(@game), notice: 'Default placement set.'
   end

@@ -21,13 +21,14 @@ BattleGameServer::Application.routes.draw do
           :via => [:get, :post], :as => 'add_ship', :defaults => {:format => :json}
     get "api/v1/game/:id" => "games#show", :as => 'game', :defaults => {:format => :json }
     get "api/v1/game/:id/attack/:row/:col" => "games#attack", :as => 'game_attack', :defaults => {:format => :json }
+    get "api/v1/game/:id/status/:type" => "games#status", :as => 'game_status', :defaults => {:type => :all, :format => :json }
   end
   
   devise_for :users
   
   get "games/new/:challenge" => "games#new", :as => 'new_game'
   get "games" => "games#index", :as => 'games_path'
-  get "game/default/:id(/:placement_num)" => "games#default", :as => 'game_default'
+  get "game/:id/default(/:placement_num)" => "games#default", :as => 'game_default'
   get "game/:id/clear_board" => "games#clear_board", :as => 'clear_board'
 
   get "game/:id/:board" => "games#get_board", :as => 'get_board'

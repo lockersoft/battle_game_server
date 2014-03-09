@@ -161,6 +161,18 @@ class Board < ActiveRecord::Base
     return ret_str
   end
 
+  def to_simple_string
+    ret_str = ""
+    cells.content.each_with_index do |row, i|
+      break if i >= width
+      row.each_with_index do |col, j|
+        break if j >= height
+        ret_str += "#{col}"
+      end
+      ret_str += "\n"
+    end
+    return ret_str
+  end
 
   def clear
     cells.content.each_with_index do |row, ri|
