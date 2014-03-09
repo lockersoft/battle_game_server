@@ -11,10 +11,15 @@ http://www.hasbro.com/commoninstruct/battleship.pdf
 
 ## API for Game Play between 2 clients  
 ## API Version 1
-All API calls must be prefixed with /api/v1/XXX
+All API calls must be prefixed with /api/v1/XXX  
+![API Actions and Return Results](http://battlegameserver.com/api_graph.png)  
+[API Actions and Return Results](http://battlegameserver.com/api_graph.pdf)  
+
+![Attack Sequence](http://battlegameserver.com/attack_sequence.png)  
+[Attack Sequence](http://battlegameserver.com/attack_sequence.pdf)  
 
 ## login  
-GET /api/v1/login(.:format)  
+GET /api/v1/login.json  
 Uses basic authentication to login to the server  
 
 ### returns: Your user profile as a JSON object:  
@@ -37,19 +42,19 @@ Uses basic authentication to login to the server
     }
 
 ## logout  
-GET /api/v1/logout(.:format)  
+GET /api/v1/logout.json  
 Logs the user out from the server  
 
 ##available_players  
-GET /api/v1/available_users(.:format)  
+GET /api/v1/available_users.json  
   returns list of available players  
 
 ##all_users  
-GET /api/v1/all_users(.:format)  
+GET /api/v1/all_users.json  
   returns list of ALL players whether they are available or not
 
 ##available_ships  
-GET /api/v1/available_ships  
+GET /api/v1/available_ships.json  
 ###returns a list of all of the available ships names and their respective sizes.  
     {
     "carrier":5,
@@ -60,7 +65,7 @@ GET /api/v1/available_ships
     }
 
 ##available_directions  
-GET /api/v1/available_directions  
+GET /api/v1/available_directions.json  
 ###returns a list of all of the available directions for placing ships.  
     {
     "north":0,
@@ -70,14 +75,14 @@ GET /api/v1/available_directions
     }
 
 ##challenge_computer  
-GET api/v1/challenge_computer  
+GET api/v1/challenge_computer.json  
 ###returns the game id which is used in future calls  
     {
     "game_id":7
     }
 
 ##add_ship  
-GET api/v1/game/:id/add_ship/:ship/:row/:col/:direction  
+GET api/v1/game/:id/add_ship/:ship/:row/:col/:direction.json  
 e.g.  /api/v1/game/7/add_ship/carrier/b/8/0.json  
 ####Success:  
     {"game_id":7,"status":"carrier ship added"}
@@ -193,3 +198,5 @@ GET api/v1/game/34/attack/h/3.json
 
 User makes themselves available to play or challenges a player
 Other player accepts challenge or chooses an available player to challenge
+
+![dave](http://battlegameserver.com/assets/avatars/davejones-0764ffe5d8b49b113003ab60c54881f5.jpg)
