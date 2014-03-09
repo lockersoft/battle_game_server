@@ -17,9 +17,11 @@ BattleGameServer::Application.routes.draw do
     get "api/v1/challenge" => "games#new", :as => 'challenge', :defaults => {:computer => false, :format => :json}
     get "api/v1/available_ships" => "games#available_ships", :as => 'available_ships', :defaults => {:format => :json}
     get "api/v1/available_directions" => "games#available_directions", :as => 'available_directions', :defaults => {:format => :json}
-    match "api/v1/game/:id/add_ship/:ship/:row/:col/:direction" => "games#add_ship", 
-          :via => [:get, :post], :as => 'add_ship', :defaults => {:format => :json}
-    get "api/v1/game/:id" => "games#show", :as => 'game', :defaults => {:format => :json }
+    
+    get "api/v1/game/:id/add_ship/:ship/:row/:col/:direction" => "games#add_ship", :as => 'add_ship'#, :defaults => {:format => :json}
+    post "api/v1/game/:id/add_ship/" => "games#add_ship", :as => 'add_ship_POST', :defaults => {:format => :html}
+    
+    get "api/v1/game/:id" => "games#show", :as => 'game'#, :defaults => {:format => :json }
     get "api/v1/game/:id/attack/:row/:col" => "games#attack", :as => 'game_attack', :defaults => {:format => :json }
     get "api/v1/game/:id/status/:type" => "games#status", :as => 'game_status', :defaults => {:type => :all, :format => :json }
   end

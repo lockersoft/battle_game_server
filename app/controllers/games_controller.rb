@@ -20,15 +20,15 @@ class GamesController < ApplicationController
     @user_attack_board     = Board.find_by_id(@game.attack_board_id_1)
     @computer_defend_board = Board.find_by_id(@game.defend_board_id_2)
     @computer_attack_board = Board.find_by_id(@game.attack_board_id_2)
-    logger.debug 'User Boards'
-    logger.debug @user_attack_board.to_s
-    logger.debug "\n\n"
-    logger.debug @user_defend_board.to_s
-
-    logger.debug 'Computer Boards'
-    logger.debug @computer_attack_board.to_s
-    logger.debug "\n\n"
-    logger.debug @computer_defend_board.to_s
+    #logger.debug 'User Boards'
+    #logger.debug @user_attack_board.to_s
+    #logger.debug "\n\n"
+    #logger.debug @user_defend_board.to_s
+    #
+    #logger.debug 'Computer Boards'
+    #logger.debug @computer_attack_board.to_s
+    #logger.debug "\n\n"
+    #logger.debug @computer_defend_board.to_s
   end
 
 
@@ -184,7 +184,7 @@ class GamesController < ApplicationController
   end
 
 
-  #          
+  # api/v1/game/:id/add_ship/:ship/:row/:col/:direction
   def add_ship
     # Get the user to find the right board to modify.
     if (@game.player1 == current_user)
@@ -220,7 +220,7 @@ class GamesController < ApplicationController
 
   # GET /games/default/:id(/:placement_num)
   def default
-    defend_board = Board.find_by_id(@game.defend_board_id_1)
+    defend_board = Board.find_by_id(@game.defend_board_id_1)  # TODO: Add ability to save boards for later reload
     defend_board.ships.create(name: 'Destroyer', size: 2, start_row: 5, start_col: 5, direction: 0)
     defend_board.ships.create(name: 'Submarine', size: 3, start_row: 3, start_col: 3, direction: 4)
     defend_board.ships.create(name: 'Cruiser', size: 3, start_row: 8, start_col: 5, direction: 0)

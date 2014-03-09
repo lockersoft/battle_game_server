@@ -3,7 +3,18 @@
 
 <h3><%= link_to "Default Ship Placement", game_default_path(@game, 5) %></h3>
 <h3><%= link_to "Clear Defending Board", clear_board_path(@game) %></h3>
-<h3><%= link_to "Add Ship", add_ship_path(@game, :ship => 1, :ship => 'carrier', :direction => 0, :row => 5, :col => 5) %></h3>
+
+<h3>Add Ship to Defending Board</h3>
+<%= form_tag(add_ship_POST_path(@game), method: :post) do %>
+<div>
+  Row: <%= select_tag("row", options_for_select( "ABCDEFGHIJ".split(//))) %><br/>
+  Col: <%= select_tag("col", options_for_select((1..10).to_a)) %><br/>
+  Ship Direction: <%= select_tag("direction", options_for_select($available_directions)) %><br/>
+  Ship Type: <%= select_tag("ship", options_for_select($available_ships_form)) %><br/>
+</div>
+<div><%= submit_tag 'Add Ship' %></div>
+
+<% end %>
 
 <h2>Your Attacking Board</h2>
 <%= display_board(@user_attack_board) %>
