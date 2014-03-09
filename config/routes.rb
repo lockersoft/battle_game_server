@@ -19,6 +19,7 @@ BattleGameServer::Application.routes.draw do
     match "api/v1/game/:id/add_ship/:ship/:row/:col/:direction" => "games#add_ship", 
           :via => [:get, :post], :as => 'add_ship', :defaults => {:format => :json}
     get "api/v1/game/:id" => "games#show", :as => 'game', :defaults => {:format => :json }
+    get "api/v1/game/:id/attack/:row/:col" => "games#attack", :as => 'game_attack', :defaults => {:format => :json }
   end
   
   devise_for :users

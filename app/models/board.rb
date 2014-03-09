@@ -10,9 +10,11 @@ class Board < ActiveRecord::Base
   class Cell
     attr_accessor :hit, :miss, :has_ship
 
+
     def initialize
       clear_cell
     end
+
 
     def clear_cell
       @has_ship = false
@@ -20,15 +22,17 @@ class Board < ActiveRecord::Base
       @miss     = false
     end
 
+
     def has_ship?
       return @has_ship
     end
-    
+
+
     def to_s
-      if @has_ship
-        "S"
-      elsif @hit
+      if @hit
         "*"
+      elsif @has_ship
+        "S"
       elsif @miss
         "-"
       else
@@ -40,9 +44,11 @@ class Board < ActiveRecord::Base
   class Cells
     attr_accessor :content
 
+
     def initialize
       @content = Array.new(HEIGHT) { Array.new(WIDTH) { Cell.new } }
     end
+
 
     def calculate_direction(dir)
       row_dir = 0
@@ -81,6 +87,7 @@ class Board < ActiveRecord::Base
       return row_dir, col_dir
     end
 
+
     def add_ship(s)
       row              = s.start_row
       col              = s.start_col
@@ -92,45 +99,58 @@ class Board < ActiveRecord::Base
         col                         += col_dir
       end
       s.board.save!
-      # TODO: Bounds checking for ships
     end
-    
-    def check_ship_placement( size, row, col, dir )
-      row_dir, col_dir = calculate_direction( dir )
-      valid = true
+
+
+    def check_ship_placement(size, row, col, dir)
+      row_dir, col_dir = calculate_direction(dir)
+      valid            = true
       size.times do
-        if( row > 9 || row < 0 || col > 9 || col < 0 || @content[row][col].has_ship?) #TODO: replace hard-coded 10
+        if (row > 9 || row < 0 || col > 9 || col < 0 || @content[row][col].has_ship?) #TODO: replace hard-coded 10
           valid = false
           #break
         end
         row += row_dir
-        col += col_dir        
+        col += col_dir
       end
       return valid
     end
   end
-  
+
 
   serialize :cells, Cells
   has_many :ships
   has_many :games
 
+
   def position_ship(ship)
     cells.add_ship(ship)
   end
-  
-  # Return true/false whether the ship can be placed at those coordinates.
-  def check_ship_placement( size, row, col, dir )
-    return cells.check_ship_placement( size, row, col, dir)
+
+
+  def check_attack(row, col)
+    hit = false
+    if cells.content[row][col].has_ship?
+      cells.content[row][col].hit = true
+      hit                         = true
+    end
+    return hit
   end
-  
+
+
+  # Return true/false whether the ship can be placed at those coordinates.
+  def check_ship_placement(size, row, col, dir)
+    return cells.check_ship_placement(size, row, col, dir)
+  end
+
+
   def to_s
     ret_str = "  "
-    1.upto(width) { |n| ret_str += "#{n}".center(4, " ") }
+    1.upto(width) { |n| ret_str += "#{n}".center(4, " ") }        # Top number columns
     ret_str += "\n  +" + ((("–" * 3) + "+") * width) + "\n"
     cells.content.each_with_index do |row, i|
       break if i >= width
-      ret_str += LETTERS[i] + " "
+      ret_str += LETTERS[i] + " "                                 # Side row letters
       row.each_with_index do |col, j|
         break if j >= height
         ret_str += "| #{col} "
@@ -140,6 +160,7 @@ class Board < ActiveRecord::Base
     end
     return ret_str
   end
+
 
   def clear
     cells.content.each_with_index do |row, ri|
@@ -151,6 +172,19 @@ class Board < ActiveRecord::Base
     end
     save!
   end
+
+
+  def computer_move
+    # find a random row and column
+    row = rand(0..9) # TODO: remove hard coded range
+    col = rand(0..9)
+    while (cells.content[row][col].miss || cells.content[row][col].hit)
+      row = rand(0..9) # TODO: remove hard coded range
+      col = rand(0..9)
+    end
+    return row, col
+  end
+
 
   private
   def default_values

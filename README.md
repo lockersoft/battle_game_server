@@ -78,13 +78,27 @@ GET api/v1/challenge_computer
 
 ##add_ship  
 GET api/v1/game/:id/add_ship/:ship/:row/:col/:direction  
-e.g.  /api/v1/game/7/add_ship/carrier/b/8/0.json
+e.g.  /api/v1/game/7/add_ship/carrier/b/8/0.json  
 ####Success:  
     {"game_id":7,"status":"carrier ship added"}
 
 ####ERROR:  
     {"error":"illegal ship placement"}
-    
+
+##attack  
+send one attack sequence  
+GET api/v1/game/34/attack/h/3.json  
+####returns hit/miss in addition to the computer's turn  
+    {
+    "game_id":34,
+    "row":7,
+    "col":2,
+    "hit":true,
+    "comp_row":8,
+    "comp_col":5,
+    "comp_hit":false
+    }
+
 - - -  
 
 #All API's below are NOT YET IMPLEMENTED
@@ -97,13 +111,9 @@ e.g.  /api/v1/game/7/add_ship/carrier/b/8/0.json
   
 ###setup_board  
   send initial board setup from client
-  
-###attack  
-  send one attack sequence  
-  returns hit/miss  
-  
+    
 ###status  
-  returns current board and hit/miss board  
+  returns attacking board and defending board  
   
 - - -  
 

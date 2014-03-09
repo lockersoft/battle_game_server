@@ -6,15 +6,15 @@
 <h3><%= link_to "Add Ship", add_ship_path(@game, :ship => 1, :ship => 'carrier', :direction => 0, :row => 5, :col => 5) %></h3>
 
 <h2>Your Attacking Board</h2>
-<%= display_board(@game.attack_board_id_1) %>
+<%= display_board(@user_attack_board) %>
 
 <h2>Your Defending Board</h2>
-<%= display_board(@game.defend_board_id_1) %>
+<%= display_board(@user_defend_board) %>
 
 <h2>Computers Attacking Board</h2>
-<%= display_board(@game.attack_board_id_2) %>
+<%= display_board(@computer_attack_board) %>
 
 <h2>Computers Defending Board</h2>
-<%= display_board(@game.defend_board_id_2) %>
+<%= display_board(@computer_defend_board) %>
 
 <%= link_to 'Back', root_path %>
