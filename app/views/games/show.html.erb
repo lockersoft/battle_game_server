@@ -4,28 +4,45 @@
 <h3><%= link_to "Default Ship Placement", game_default_path(@game, 5) %></h3>
 <h3><%= link_to "Clear Defending Board", clear_board_path(@game) %></h3>
 
-<h3>Add Ship to Defending Board</h3>
+<div id="add_ship">
 <%= form_tag(add_ship_POST_path(@game), method: :post) do %>
-<div>
-  Row: <%= select_tag("row", options_for_select( "ABCDEFGHIJ".split(//))) %><br/>
-  Col: <%= select_tag("col", options_for_select((1..10).to_a)) %><br/>
-  Ship Direction: <%= select_tag("direction", options_for_select($available_directions)) %><br/>
-  Ship Type: <%= select_tag("ship", options_for_select($available_ships_form)) %><br/>
-</div>
-<div><%= submit_tag 'Add Ship' %></div>
-
+    <h3>Add Ship to Defending Board</h3>
+    <div>
+      Row: <%= select_tag("row", options_for_select( "ABCDEFGHIJ".split(//))) %> 
+      Col: <%= select_tag("col", options_for_select((1..10).to_a)) %><br/>
+      Ship Direction: <%= select_tag("direction", options_for_select($available_directions)) %><br/>
+      Ship Type: <%= select_tag("ship", options_for_select($available_ships_form)) %><br/>
+    </div>
+    <div><%= submit_tag 'Add Ship' %></div>
 <% end %>
+</div>
 
-<h2>Your Attacking Board</h2>
-<%= display_board(@user_attack_board) %>
+<div id="attack">
+<%= form_tag(game_attack_POST_path(@game), method: :post) do %>
+    <h3>Attack Computer's Board</h3>
+    <div>
+      Row: <%= select_tag("row", options_for_select( "ABCDEFGHIJ".split(//))) %> 
+      Col: <%= select_tag("col", options_for_select((1..10).to_a)) %><br/>
+    </div>
+    <div><%= submit_tag 'Attack' %></div>
+<% end %>  
+</div>
 
-<h2>Your Defending Board</h2>
+<div class="clear"></div>
+
+<div id="user">
+  <h2>Your Attacking Board</h2>
+  <%= display_board(@user_attack_board) %>
+  
+  <h2>Your Defending Board</h2>
 <%= display_board(@user_defend_board) %>
-
+</div>
+<div id="computer">
 <h2>Computers Attacking Board</h2>
-<%= display_board(@computer_attack_board) %>
-
-<h2>Computers Defending Board</h2>
-<%= display_board(@computer_defend_board) %>
+  <%= display_board(@computer_attack_board) %>
+  
+  <h2>Computers Defending Board</h2>
+  <%= display_board(@computer_defend_board) %>
+</div>
 
 <%= link_to 'Back', root_path %>

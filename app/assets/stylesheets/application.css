@@ -15,3 +15,14 @@
  *= require dataTables/src/demo_table_jui 
  *= require_tree .
  */
+
+.user {
+  float: left;
+  width: 300px;
+  
+}
+
+.computer {
+  float:left;
+  width: 300px;
+}

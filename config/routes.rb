@@ -22,7 +22,10 @@ BattleGameServer::Application.routes.draw do
     post "api/v1/game/:id/add_ship/" => "games#add_ship", :as => 'add_ship_POST', :defaults => {:format => :html}
     
     get "api/v1/game/:id" => "games#show", :as => 'game'#, :defaults => {:format => :json }
-    get "api/v1/game/:id/attack/:row/:col" => "games#attack", :as => 'game_attack', :defaults => {:format => :json }
+    
+    get  "api/v1/game/:id/attack/:row/:col" => "games#attack", :as => 'game_attack', :defaults => {:format => :json }
+    post "api/v1/game/:id/attack" => "games#attack", :as => 'game_attack_POST', :defaults => {:format => :html}
+    
     get "api/v1/game/:id/status/:type" => "games#status", :as => 'game_status', :defaults => {:type => :all, :format => :json }
   end
   

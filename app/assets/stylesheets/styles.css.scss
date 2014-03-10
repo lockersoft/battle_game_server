@@ -1,0 +1,27 @@
+@import 'bourbon';
+
+#user, #add_ship {
+  float   : left;
+  width   : 400px;
+  margin  : 10px;
+  padding : 10px;
+  border  : 2px solid blue;
+}
+#add_ship {
+  height : 200px;
+}
+
+#computer, #attack {
+  float   : left;
+  width   : 400px;
+  margin  : 10px;
+  padding : 10px;
+  border  : 2px solid red;
+}
+
+#attack {
+  height : 200px;  
+}
+.clear {
+  clear : both;
+}
