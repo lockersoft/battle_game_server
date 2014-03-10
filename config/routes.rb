@@ -34,6 +34,7 @@ BattleGameServer::Application.routes.draw do
   get "games/new/:challenge" => "games#new", :as => 'new_game'
   get "games" => "games#index", :as => 'games_path'
   get "game/:id/default(/:placement_num)" => "games#default", :as => 'game_default'
+  get "game/:id/clear_board" => "games#clear_board", :as => 'clear_board'
 
   get "game/:id/:board" => "games#get_board", :as => 'get_board'
   
