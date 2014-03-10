@@ -137,17 +137,14 @@ class GamesController < ApplicationController
 
   # GET /games/:id/clear
   def clear_board
-    if( params[:computer])
-      board = Board.find(@game.attack_board_id_1)
-      board.clear
-      board = Board.find(@game.defend_board_id_2)
-      board.clear
-    else
-      board = Board.find(@game.defend_board_id_1)
-      board.clear
-      board = Board.find(@game.attack_board_id_2)
-      board.clear      
-    end
+    board = Board.find(@game.attack_board_id_1)
+    board.clear
+    board = Board.find(@game.defend_board_id_2)
+    board.clear
+    board = Board.find(@game.defend_board_id_1)
+    board.clear
+    board = Board.find(@game.attack_board_id_2)
+    board.clear
     redirect_to @game
   end
 
@@ -165,8 +162,8 @@ class GamesController < ApplicationController
     user_hit, @computer_sunk_ship                                 = @computer_defend_board.check_attack(row, col)
     @user_attack_board.cells.content[row][col].hit                = user_hit # TODO: refactor into a model method
     @user_attack_board.cells.content[row][col].miss               = !user_hit # TODO: refactor into a model method
-    @computer_defend_board.cells.content[row][col].hit  = user_hit
-    @computer_defend_board.cells.content[row][col].miss = !user_hit
+    @computer_defend_board.cells.content[row][col].hit            = user_hit
+    @computer_defend_board.cells.content[row][col].miss           = !user_hit
 
     # Make the computer's move so it can be returned with this same request.
     comp_row, comp_col                                            = @computer_attack_board.computer_move
