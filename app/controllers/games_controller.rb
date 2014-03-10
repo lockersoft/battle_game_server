@@ -165,8 +165,8 @@ class GamesController < ApplicationController
     user_hit, @computer_sunk_ship                                 = @computer_defend_board.check_attack(row, col)
     @user_attack_board.cells.content[row][col].hit                = user_hit # TODO: refactor into a model method
     @user_attack_board.cells.content[row][col].miss               = !user_hit # TODO: refactor into a model method
-    @computer_defend_board.cells.content[comp_row][comp_col].hit  = user_hit
-    @computer_defend_board.cells.content[comp_row][comp_col].miss = !user_hit
+    @computer_defend_board.cells.content[row][col].hit  = user_hit
+    @computer_defend_board.cells.content[row][col].miss = !user_hit
 
     # Make the computer's move so it can be returned with this same request.
     comp_row, comp_col                                            = @computer_attack_board.computer_move

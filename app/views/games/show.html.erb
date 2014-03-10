@@ -1,8 +1,8 @@
 <h1><%= @user.avatar_name %> Challenges <%= @game.player_id_2 == 0 ? "Computer" : @game.player2.avatar_name %></h1>
 
-<h4><%= link_to "Default Ship Placement", game_default_path(@game, 5) %></h4>
-<h4><%= link_to "Clear Defending Board", clear_board_path(@game) %></h4>
-<h4><%= link_to "Clear Computer Board", clear_board_path(@game, :computer => 'computer') %></h4>
+<h4><%= link_to "Default Ship Placement for Your board", game_default_path(@game, 5) %></h4>
+<h4><%= link_to "Clear Your Boards", clear_board_path(@game) %></h4>
+<h4><%= link_to "Clear Computer Boards", clear_board_path(@game, :computer => 'computer') %></h4>
 
 <%= @computer_sunk_ship.inspect %> <br/>
 <%= @user_sunk_ship.inspect %><br/>
