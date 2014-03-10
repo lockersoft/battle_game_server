@@ -8,7 +8,7 @@ class Board < ActiveRecord::Base
   LETTERS = %w(A B C D E F G H I J K L M N O P Q R S T U V W X Y Z)
 
   class Cell
-    attr_accessor :hit, :miss, :has_ship
+    attr_accessor :hit, :miss, :has_ship, :sunk
 
 
     def initialize
@@ -20,6 +20,7 @@ class Board < ActiveRecord::Base
       @has_ship = false
       @hit      = false
       @miss     = false
+      @sunk     = false
     end
 
 
@@ -35,6 +36,8 @@ class Board < ActiveRecord::Base
         "S"
       elsif @miss
         "-"
+      elsif @sunk
+        "X"
       else
         " "
       end
@@ -50,7 +53,7 @@ class Board < ActiveRecord::Base
     end
 
 
-    def calculate_direction(dir)
+    def self.calculate_direction(dir)
       row_dir = 0
       col_dir = 0
 
@@ -101,20 +104,21 @@ class Board < ActiveRecord::Base
       s.board.save!
     end
 
+  end
 
-    def check_ship_placement(size, row, col, dir)
-      row_dir, col_dir = calculate_direction(dir)
-      valid            = true
-      size.times do
-        if (row > 9 || row < 0 || col > 9 || col < 0 || @content[row][col].has_ship?) #TODO: replace hard-coded 10
-          valid = false
-          #break
-        end
-        row += row_dir
-        col += col_dir
+
+  def check_ship_placement(size, row, col, dir)
+    row_dir, col_dir = calculate_direction(dir)
+    valid            = true
+    size.times do
+      if (row > 9 || row < 0 || col > 9 || col < 0 || @content[row][col].has_ship?) #TODO: replace hard-coded 10
+        valid = false
+        #break
       end
-      return valid
+      row += row_dir
+      col += col_dir
     end
+    return valid
   end
 
 
@@ -129,16 +133,61 @@ class Board < ActiveRecord::Base
 
 
   def check_attack(row, col)
-    hit = false
+    hit       = false
+    sunk_ship = nil
+
     if cells.content[row][col].has_ship?
       cells.content[row][col].hit = true
       hit                         = true
     end
-    return hit
+    if hit
+      sunk_ship = check_ship_sunk(row, col)
+    end
+    return hit, sunk_ship
   end
 
 
-  # Return true/false whether the ship can be placed at those coordinates.
+  def check_ship_sunk(row, col)
+    # Walk through all the ships to find one that has this row/col
+    # then check to see if this ship is completely sunk
+    # Return ship_id
+    found_ship       = nil
+    ships = self.ships.to_a
+    ships.each do |ship|
+      srow             = ship.start_row
+      scol             = ship.start_col
+      row_dir, col_dir = Cells.calculate_direction(ship.direction)
+
+      ship.size.times do
+        if srow == row && scol == col
+          found_ship = ship
+          break
+        end
+        srow += row_dir
+        scol += col_dir
+      end
+    end
+
+    if (found_ship != nil)
+      hits             = 0
+      srow             = found_ship.start_row
+      scol             = found_ship.start_col
+      row_dir, col_dir = Cells.calculate_direction(found_ship.direction)
+      # Check to see if this ship is full of holes
+      found_ship.size.times do
+        if cells.content[srow][scol].hit
+          hits += 1
+        end
+        srow += row_dir
+        scol += col_dir
+      end
+
+    end
+    return found_ship.size == hits ? found_ship : nil
+  end
+
+
+# Return true/false whether the ship can be placed at those coordinates.
   def check_ship_placement(size, row, col, dir)
     return cells.check_ship_placement(size, row, col, dir)
   end
@@ -146,11 +195,11 @@ class Board < ActiveRecord::Base
 
   def to_s
     ret_str = "  "
-    1.upto(width) { |n| ret_str += "#{n}".center(4, " ") }        # Top number columns
+    1.upto(width) { |n| ret_str += "#{n}".center(4, " ") } # Top number columns
     ret_str += "\n  +" + ((("–" * 3) + "+") * width) + "\n"
     cells.content.each_with_index do |row, i|
       break if i >= width
-      ret_str += LETTERS[i] + " "                                 # Side row letters
+      ret_str += LETTERS[i] + " " # Side row letters
       row.each_with_index do |col, j|
         break if j >= height
         ret_str += "| #{col} "
@@ -160,6 +209,7 @@ class Board < ActiveRecord::Base
     end
     return ret_str
   end
+
 
   def to_simple_string
     ret_str = ""
@@ -173,6 +223,7 @@ class Board < ActiveRecord::Base
     end
     return ret_str
   end
+
 
   def clear
     cells.content.each_with_index do |row, ri|
