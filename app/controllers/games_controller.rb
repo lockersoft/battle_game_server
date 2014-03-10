@@ -137,8 +137,17 @@ class GamesController < ApplicationController
 
   # GET /games/:id/clear
   def clear_board
-    @board = Board.find(@game.defend_board_id_1)
-    @board.clear
+    if( params[:computer])
+      board = Board.find(@game.attack_board_id_1)
+      board.clear
+      board = Board.find(@game.defend_board_id_2)
+      board.clear
+    else
+      board = Board.find(@game.defend_board_id_1)
+      board.clear
+      board = Board.find(@game.attack_board_id_2)
+      board.clear      
+    end
     redirect_to @game
   end
 
@@ -153,15 +162,22 @@ class GamesController < ApplicationController
     @computer_attack_board                                        = Board.find_by_id(@game.attack_board_id_2)
 
     # Check in defending user's defending board to see if it is a hit/miss
-    user_hit                                                      = @computer_defend_board.check_attack(row, col)
+    user_hit, @computer_sunk_ship                                 = @computer_defend_board.check_attack(row, col)
     @user_attack_board.cells.content[row][col].hit                = user_hit # TODO: refactor into a model method
     @user_attack_board.cells.content[row][col].miss               = !user_hit # TODO: refactor into a model method
+    @computer_defend_board.cells.content[comp_row][comp_col].hit  = user_hit
+    @computer_defend_board.cells.content[comp_row][comp_col].miss = !user_hit
 
     # Make the computer's move so it can be returned with this same request.
     comp_row, comp_col                                            = @computer_attack_board.computer_move
-    comp_hit                                                      = @user_defend_board.check_attack(comp_row, comp_col)
+    comp_hit, @user_sunk_ship                                     = @user_defend_board.check_attack(comp_row, comp_col)
     @computer_attack_board.cells.content[comp_row][comp_col].hit  = comp_hit
     @computer_attack_board.cells.content[comp_row][comp_col].miss = !comp_hit
+    @user_defend_board.cells.content[comp_row][comp_col].hit      = comp_hit # TODO: refactor into a model method
+    @user_defend_board.cells.content[comp_row][comp_col].miss     = !comp_hit # TODO: refactor into a model method
+
+    @user_sunk_ship.sink if @user_sunk_ship
+    @computer_sunk_ship.sink if @computer_sunk_ship
 
     @user_defend_board.save!
     @user_attack_board.save!
@@ -169,14 +185,16 @@ class GamesController < ApplicationController
     @computer_attack_board.save!
 
     respond_to do |format|
-      format.html { redirect_to game_path(@game), notice: 'Attack.' }
-      format.json { render json: { "game_id"  => @game.id,
-                                   "row"      => row,
-                                   "col"      => col,
-                                   "hit"      => user_hit,
-                                   "comp_row" => comp_row,
-                                   "comp_col" => comp_col,
-                                   "comp_hit" => comp_hit
+      format.html { redirect_to game_path(@game), notice: "Attack: #{params[row]} #{params[col]}" }
+      format.json { render json: { :game_id   => @game.id,
+                                   :row       => row,
+                                   :col       => col,
+                                   :hit       => user_hit,
+                                   :comp_row  => comp_row,
+                                   :comp_col  => comp_col,
+                                   :comp_hit  => comp_hit,
+                                   :user_sunk => @user_sunk_ship,
+                                   :comp_sunk => @computer_sunk_ship
       }
       }
 
@@ -220,7 +238,7 @@ class GamesController < ApplicationController
 
   # GET /games/default/:id(/:placement_num)
   def default
-    defend_board = Board.find_by_id(@game.defend_board_id_1)  # TODO: Add ability to save boards for later reload
+    defend_board = Board.find_by_id(@game.defend_board_id_1) # TODO: Add ability to save boards for later reload
     defend_board.ships.create(name: 'Destroyer', size: 2, start_row: 5, start_col: 5, direction: 0)
     defend_board.ships.create(name: 'Submarine', size: 3, start_row: 3, start_col: 3, direction: 4)
     defend_board.ships.create(name: 'Cruiser', size: 3, start_row: 8, start_col: 5, direction: 0)

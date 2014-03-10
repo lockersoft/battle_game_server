@@ -12,6 +12,10 @@ class Ship < ActiveRecord::Base
   belongs_to :board
   after_create :position_ship
   
+  def sink
+    self.sunk = true
+  end
+  
   def position_ship
     self.board.position_ship( self )
   end
