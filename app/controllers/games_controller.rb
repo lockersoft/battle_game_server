@@ -194,6 +194,9 @@ class GamesController < ApplicationController
     
     session[:user_sunk_ship] = @user_sunk_ship ? @user_sunk_ship.id : nil
     session[:computer_sunk_ship] = @computer_sunk_ship ? @computer_sunk_ship.id : nil
+    row = convert_row_to_letter(row)
+    comp_row = convert_row_to_letter( comp_row)
+    
     respond_to do |format|
       format.html { redirect_to game_path(@game), notice: "Attack: #{params[row]} #{params[col]}" }
       format.json { render json: { :game_id   => @game.id,
@@ -300,5 +303,9 @@ class GamesController < ApplicationController
 
   def convert_row(r)
     return r.downcase.ord - 'a'.ord # Convert row letter into array number
+  end
+  
+  def convert_row_to_letter( num )
+    return (num + 'a'.ord).chr
   end
 end
