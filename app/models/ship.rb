@@ -16,6 +16,10 @@ class Ship < ActiveRecord::Base
     self.sunk = true
   end
   
+  def to_s
+    "Name: #{self.name} size: #{self.size}, start_row: #{self.start_row}, start_col: #{self.start_col}"  
+  end
+  
   def position_ship
     self.board.position_ship( self )
   end

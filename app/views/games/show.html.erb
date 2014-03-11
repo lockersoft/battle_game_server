@@ -3,8 +3,8 @@
 <h4><%= link_to "Default Ship Placement for Your board", game_default_path(@game, 5) %></h4>
 <h4><%= link_to "Clear All Boards", clear_board_path(@game) %></h4>
 
-<%= @computer_sunk_ship.inspect %> <br/>
-<%= @user_sunk_ship.inspect %><br/>
+Computer Sunk Ship: <%= @computer_sunk_ship.to_s %> <br/>
+User Sunk Ship: <%= @user_sunk_ship.to_s %><br/>
 
 <div id="add_ship">
 <%= form_tag(add_ship_POST_path(@game), method: :post) do %>

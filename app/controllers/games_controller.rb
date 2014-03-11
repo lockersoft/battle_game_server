@@ -20,6 +20,14 @@ class GamesController < ApplicationController
     @user_attack_board     = Board.find_by_id(@game.attack_board_id_1)
     @computer_defend_board = Board.find_by_id(@game.defend_board_id_2)
     @computer_attack_board = Board.find_by_id(@game.attack_board_id_2)
+    
+    
+    user_sunk_ship_id = session[:user_sunk_ship] if session[:user_sunk_ship]
+    computer_sunk_ship_id = session[:computer_sunk_ship] if session[:computer_sunk_ship]
+    
+    @user_sunk_ship = Ship.find_by_id(user_sunk_ship_id)
+    @computer_sunk_ship = Ship.find_by_id(computer_sunk_ship_id)
+    
     #logger.debug 'User Boards'
     #logger.debug @user_attack_board.to_s
     #logger.debug "\n\n"
@@ -181,6 +189,11 @@ class GamesController < ApplicationController
     @computer_defend_board.save!
     @computer_attack_board.save!
 
+    usunk = @user_sunk_ship ? @user_sunk_ship.name : "no"
+    csunk = @computer_sunk_ship ? @computer_sunk_ship.name : "no"
+    
+    session[:user_sunk_ship] = @user_sunk_ship ? @user_sunk_ship.id : nil
+    session[:computer_sunk_ship] = @computer_sunk_ship ? @computer_sunk_ship.id : nil
     respond_to do |format|
       format.html { redirect_to game_path(@game), notice: "Attack: #{params[row]} #{params[col]}" }
       format.json { render json: { :game_id   => @game.id,
@@ -190,8 +203,8 @@ class GamesController < ApplicationController
                                    :comp_row  => comp_row,
                                    :comp_col  => comp_col,
                                    :comp_hit  => comp_hit,
-                                   :user_sunk => @user_sunk_ship,
-                                   :comp_sunk => @computer_sunk_ship
+                                   :user_ship_sunk => usunk,
+                                   :comp_ship_sunk => csunk
       }
       }
 

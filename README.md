@@ -102,6 +102,8 @@ GET api/v1/game/34/attack/h/3.json
     "comp_row":8,
     "comp_col":5,
     "comp_hit":false
+    "user_ship_sunk": "no",
+    "comp_ship_sunk": "cruiser"
     }
 
 ##status  
