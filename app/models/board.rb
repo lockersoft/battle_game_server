@@ -53,7 +53,7 @@ class Board < ActiveRecord::Base
     end
 
 
-    def self.calculate_direction(dir)
+    def calculate_direction(dir)
       row_dir = 0
       col_dir = 0
 
