@@ -11,15 +11,16 @@ class User < ActiveRecord::Base
   
   
   def avatar_url
-    "#{$custom_host}/#{avatar_image}"  # TODO: use this instead of avatar_name
+    #"#{$custom_host}/#{avatar_image}"  # TODO: use this instead of avatar_name
+    avatar.url(:thumb)
   end
   
   def self.get_profile( id )
-    select(:id,:first_name,:last_name,:avatar_name,:level,:coins,:battles_won,:battles_lost,:battles_tied,:experience_points,:available,:online,:gaming,:email,:avatar_image).find(id)    
+    select(:id,:first_name,:last_name,:avatar_name,:level,:coins,:battles_won,:battles_lost,:battles_tied,:experience_points,:available,:online,:gaming,:email,:avatar_url).find(id)    
   end
  
   def self.display_available
-    order( :available ).select( :id,:first_name,:last_name,:avatar_name,:level,:coins,:battles_won,:battles_lost,:battles_tied,:experience_points,:available,:online,:gaming,:email,:avatar_image )
+    order( :available ).select( :id,:first_name,:last_name,:avatar_name,:level,:coins,:battles_won,:battles_lost,:battles_tied,:experience_points,:available,:online,:gaming,:email,:avatar_url )
     
   end
   
