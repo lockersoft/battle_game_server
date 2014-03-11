@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   before_save :set_avatar_image
   
   def set_avatar_image
-    self.avatar_image = avatar.url(:medium) if avatar
+    self.avatar_image = avatar.url(:thumb) if avatar
   end
   
   def avatar_url

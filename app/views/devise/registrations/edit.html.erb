@@ -37,6 +37,8 @@
 
 Your current Avatar URL: <%= link_to 'Avatar', @user.avatar.url %><br/>
 <%= image_tag @user.avatar.url(:medium) %>
+<br/>
+<%= image_tag @user.avatar.url(:thumb) %>
 
 <h3>Cancel my account</h3>
 
