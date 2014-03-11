@@ -104,22 +104,24 @@ class Board < ActiveRecord::Base
       s.board.save!
     end
 
-  end
-
-
-  def check_ship_placement(size, row, col, dir)
-    row_dir, col_dir = calculate_direction(dir)
-    valid            = true
-    size.times do
-      if (row > 9 || row < 0 || col > 9 || col < 0 || @content[row][col].has_ship?) #TODO: replace hard-coded 10
-        valid = false
-        #break
-      end
-      row += row_dir
-      col += col_dir
+    def check_ship_placement(size, row, col, dir)
+       row_dir, col_dir = calculate_direction(dir)
+       valid            = true
+       size.times do
+         if (row > 9 || row < 0 || col > 9 || col < 0 || @content[row][col].has_ship?) #TODO: replace hard-coded 10
+           valid = false
+           #break
+         end
+         row += row_dir
+         col += col_dir
+       end
+       return valid
     end
-    return valid
+    
   end
+
+
+ 
 
 
   serialize :cells, Cells
@@ -151,8 +153,8 @@ class Board < ActiveRecord::Base
     # Walk through all the ships to find one that has this row/col
     # then check to see if this ship is completely sunk
     # Return ship_id
-    found_ship       = nil
-    ships = self.ships.to_a
+    found_ship = nil
+    ships      = self.ships.to_a
     ships.each do |ship|
       srow             = ship.start_row
       scol             = ship.start_col
