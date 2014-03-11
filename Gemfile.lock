@@ -214,6 +214,7 @@ DEPENDENCIES
   capistrano-rails
   capistrano-rvm
   capybara (= 2.1.0)
+  cocaine (= 0.5.3)
   coffee-rails (~> 4.0.0)
   devise
   jbuilder (~> 1.2)

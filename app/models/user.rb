@@ -8,7 +8,11 @@ class User < ActiveRecord::Base
   
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/assets/avatars/unknown.png"
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
+  before_save :set_avatar_image
   
+  def set_avatar_image
+    self.avatar_image = avatar.url(:medium) if avatar
+  end
   
   def avatar_url
     #"#{$custom_host}/#{avatar_image}"  # TODO: use this instead of avatar_name
