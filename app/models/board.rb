@@ -158,7 +158,7 @@ class Board < ActiveRecord::Base
     ships.each do |ship|
       srow             = ship.start_row
       scol             = ship.start_col
-      row_dir, col_dir = Cells.calculate_direction(ship.direction)
+      row_dir, col_dir = cells.calculate_direction(ship.direction)
 
       ship.size.times do
         if srow == row && scol == col
@@ -174,7 +174,7 @@ class Board < ActiveRecord::Base
       hits             = 0
       srow             = found_ship.start_row
       scol             = found_ship.start_col
-      row_dir, col_dir = Cells.calculate_direction(found_ship.direction)
+      row_dir, col_dir = cells.calculate_direction(found_ship.direction)
       # Check to see if this ship is full of holes
       found_ship.size.times do
         if cells.content[srow][scol].hit
