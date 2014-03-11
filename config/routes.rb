@@ -1,4 +1,6 @@
 BattleGameServer::Application.routes.draw do
+  root 'users#index'
+
   get "users/index"
   get "users/available" => 'users#index', :defaults => { :available => '1' }
   get "users/challenge"
@@ -39,7 +41,6 @@ BattleGameServer::Application.routes.draw do
   get "game/:id/:board" => "games#get_board", :as => 'get_board'
   
   # You can have the root of your site routed with "root"
-  root 'users#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
