@@ -1,4 +1,5 @@
 class GamesController < ApplicationController
+  before_filter :check_auth #, :except => [:index]
   before_action :set_game, only: [:show, :edit, :update, :destroy,
                                   :default, :clear_board, :add_ship,
                                   :get_board, :attack, :status
