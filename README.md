@@ -95,11 +95,11 @@ send one attack sequence
 GET api/v1/game/34/attack/h/3.json  
 ####returns hit/miss in addition to the computer's turn  
     {
-    "game_id":34,
-    "row":7,
-    "col":2,
+    "game_id":34,       
+    "row":h,        # Your Attack Row
+    "col":3,
     "hit":true,
-    "comp_row":8,
+    "comp_row":c,
     "comp_col":5,
     "comp_hit":false
     "user_ship_sunk": "no",
