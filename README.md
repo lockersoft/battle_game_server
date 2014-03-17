@@ -96,12 +96,12 @@ GET api/v1/game/34/attack/h/3.json
 ####returns hit/miss in addition to the computer's turn  
     {
     "game_id":34,       
-    "row":h,        # Your Attack Row
+    "row":h,          # Your Attack Row/Col
     "col":3,
-    "hit":true,
-    "comp_row":c,
+    "hit":true,       # Did your attack hit a ship?
+    "comp_row":c,     # Computers Attack Row/Col
     "comp_col":5,
-    "comp_hit":false
+    "comp_hit":false  # Did the computer hit your ship?
     "user_ship_sunk": "no",
     "comp_ship_sunk": "cruiser"
     }
