@@ -72,6 +72,8 @@ class GamesController < ApplicationController
                              coins:             100 # TODO:  Assign coins to different types of games.
     # TODO:  Apportion out based on relative damage to each side
     )
+    @game.user_ships_sunk = 0
+    @game.computer_ships_sunk = 0
 
     respond_to do |format|
       if @game.save
@@ -196,6 +198,7 @@ class GamesController < ApplicationController
       winner = ""
     end
     
+    @game.save!
     @user_defend_board.save!
     @user_attack_board.save!
     @computer_defend_board.save!
