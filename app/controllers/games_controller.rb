@@ -21,14 +21,14 @@ class GamesController < ApplicationController
     @user_attack_board     = Board.find_by_id(@game.attack_board_id_1)
     @computer_defend_board = Board.find_by_id(@game.defend_board_id_2)
     @computer_attack_board = Board.find_by_id(@game.attack_board_id_2)
-    
-    
-    user_sunk_ship_id = session[:user_sunk_ship] if session[:user_sunk_ship]
-    computer_sunk_ship_id = session[:computer_sunk_ship] if session[:computer_sunk_ship]
-    
-    @user_sunk_ship = Ship.find_by_id(user_sunk_ship_id)
+
+
+    user_sunk_ship_id      = session[:user_sunk_ship] if session[:user_sunk_ship]
+    computer_sunk_ship_id  = session[:computer_sunk_ship] if session[:computer_sunk_ship]
+
+    @user_sunk_ship     = Ship.find_by_id(user_sunk_ship_id)
     @computer_sunk_ship = Ship.find_by_id(computer_sunk_ship_id)
-    
+
     #logger.debug 'User Boards'
     #logger.debug @user_attack_board.to_s
     #logger.debug "\n\n"
@@ -183,8 +183,19 @@ class GamesController < ApplicationController
     @user_defend_board.cells.content[comp_row][comp_col].miss     = !comp_hit # TODO: refactor into a model method
 
     @user_sunk_ship.sink if @user_sunk_ship
-    @computer_sunk_ship.sink if @computer_sunk_ship
+    @game.computer_ships_sunk += 1 if @user_sunk_ship
 
+    @computer_sunk_ship.sink if @computer_sunk_ship
+    @game.user_ships_sunk += 1 if @computer_sunk_ship
+
+    if (@game.user_ships_sunk == $available_ships.count)
+      winner = "computer"
+    elsif (@game.computer_ships_sunk == $available_ships.count)
+      winner = "you"
+    else
+      winner = ""
+    end
+    
     @user_defend_board.save!
     @user_attack_board.save!
     @computer_defend_board.save!
@@ -192,23 +203,29 @@ class GamesController < ApplicationController
 
     usunk = @user_sunk_ship ? @user_sunk_ship.name : "no"
     csunk = @computer_sunk_ship ? @computer_sunk_ship.name : "no"
-    
-    session[:user_sunk_ship] = @user_sunk_ship ? @user_sunk_ship.id : nil
+
+    session[:user_sunk_ship]     = @user_sunk_ship ? @user_sunk_ship.id : nil
     session[:computer_sunk_ship] = @computer_sunk_ship ? @computer_sunk_ship.id : nil
-    row = convert_row_to_letter(row)
-    comp_row = convert_row_to_letter( comp_row)
-    
+    row                          = convert_row_to_letter(row)
+    comp_row                     = convert_row_to_letter(comp_row)
+
+    #TODO: add game.winner_id 
+
     respond_to do |format|
       format.html { redirect_to game_path(@game), notice: "Attack: #{params[row]} #{params[col]}" }
-      format.json { render json: { :game_id   => @game.id,
-                                   :row       => row,
-                                   :col       => col,
-                                   :hit       => user_hit,
-                                   :comp_row  => comp_row,
-                                   :comp_col  => comp_col,
-                                   :comp_hit  => comp_hit,
-                                   :user_ship_sunk => usunk,
-                                   :comp_ship_sunk => csunk
+      format.json { render json: { :game_id                 => @game.id,
+                                   :row                     => row,
+                                   :col                     => col,
+                                   :hit                     => user_hit,
+                                   :comp_row                => comp_row,
+                                   :comp_col                => comp_col,
+                                   :comp_hit                => comp_hit,
+                                   :user_ship_sunk          => usunk,
+                                   :comp_ship_sunk          => csunk,
+                                   :num_computer_ships_sunk => @game.computer_ships_sunk,
+                                   :num_your_ships_sunk     => @game.user_ships_sunk,
+                                   :winner                  => winner #"computer", "you"
+
       }
       }
 
@@ -305,8 +322,9 @@ class GamesController < ApplicationController
   def convert_row(r)
     return r.downcase.ord - 'a'.ord # Convert row letter into array number
   end
-  
-  def convert_row_to_letter( num )
+
+
+  def convert_row_to_letter(num)
     return (num + 'a'.ord).chr
   end
 end

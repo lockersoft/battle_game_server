@@ -103,7 +103,10 @@ GET api/v1/game/34/attack/h/3.json
     "comp_col":5,
     "comp_hit":false  # Did the computer hit your ship?
     "user_ship_sunk": "no",
-    "comp_ship_sunk": "cruiser"
+    "comp_ship_sunk": "cruiser",
+    "num_computer_ships_sunk": 3,
+    "num_your_ships_sunk": 2,
+    "winner": ""  #"computer", "you"
     }
 
 ##status  
