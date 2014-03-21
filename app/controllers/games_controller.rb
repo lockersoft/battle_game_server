@@ -58,6 +58,10 @@ class GamesController < ApplicationController
   # GET /api/v1/challenge_computer
   def new
     @user       = current_user
+    @user.available = false # TODO: refactor
+    @user.gaming = true
+    @user.save!
+    
     @challenged = params[:computer] ? 0 : User.find_by_id(params[:challenge]).id
 
     attackboard_1 = Board.create(width: 10, height: 10)
@@ -191,8 +195,12 @@ class GamesController < ApplicationController
     @game.user_ships_sunk += 1 if @computer_sunk_ship
 
     if (@game.user_ships_sunk == $available_ships.count)
+      current_user.available = true   # TODO: Refactor
+      current_user.gaming = false
       winner = "computer"
     elsif (@game.computer_ships_sunk == $available_ships.count)
+      current_user.available = true
+      current_user.gaming = false
       winner = "you"
     else
       winner = ""
