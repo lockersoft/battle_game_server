@@ -8,7 +8,7 @@ class UsersController < ApplicationController
       current_user.online = false
       current_user.gaming = false
     end
-    sign_out current_user
+    sign_out current_user 
     render json: '"logged out"'
   end
 

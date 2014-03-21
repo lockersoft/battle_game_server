@@ -57,26 +57,26 @@ class GamesController < ApplicationController
   # GET /challenge
   # GET /api/v1/challenge_computer
   def new
-    @user       = current_user
+    @user           = current_user
     @user.available = false # TODO: refactor
-    @user.gaming = true
+    @user.gaming    = true
     @user.save!
-    
+
     @challenged = params[:computer] ? 0 : User.find_by_id(params[:challenge]).id
 
-    attackboard_1 = Board.create(width: 10, height: 10)
-    attackboard_2 = Board.create(width: 10, height: 10)
-    defendboard_1 = Board.create(width: 10, height: 10)
-    defendboard_2 = Board.create(width: 10, height: 10)
-    @game         = Game.new(player_id_1:       @user.id, player_id_2: @challenged,
-                             attack_board_id_1: attackboard_1.id,
-                             attack_board_id_2: attackboard_2.id,
-                             defend_board_id_1: defendboard_1.id,
-                             defend_board_id_2: defendboard_2.id,
-                             coins:             100 # TODO:  Assign coins to different types of games.
+    attackboard_1             = Board.create(width: 10, height: 10)
+    attackboard_2             = Board.create(width: 10, height: 10)
+    defendboard_1             = Board.create(width: 10, height: 10)
+    defendboard_2             = Board.create(width: 10, height: 10)
+    @game                     = Game.new(player_id_1:       @user.id, player_id_2: @challenged,
+                                         attack_board_id_1: attackboard_1.id,
+                                         attack_board_id_2: attackboard_2.id,
+                                         defend_board_id_1: defendboard_1.id,
+                                         defend_board_id_2: defendboard_2.id,
+                                         coins:             100 # TODO:  Assign coins to different types of games.
     # TODO:  Apportion out based on relative damage to each side
     )
-    @game.user_ships_sunk = 0
+    @game.user_ships_sunk     = 0
     @game.computer_ships_sunk = 0
 
     respond_to do |format|
@@ -195,17 +195,17 @@ class GamesController < ApplicationController
     @game.user_ships_sunk += 1 if @computer_sunk_ship
 
     if (@game.user_ships_sunk == $available_ships.count)
-      current_user.available = true   # TODO: Refactor
-      current_user.gaming = false
-      winner = "computer"
+      current_user.available = true # TODO: Refactor
+      current_user.gaming    = false
+      winner                 = "computer"
     elsif (@game.computer_ships_sunk == $available_ships.count)
       current_user.available = true
-      current_user.gaming = false
-      winner = "you"
+      current_user.gaming    = false
+      winner                 = "you"
     else
       winner = ""
     end
-    
+
     @game.save!
     @user_defend_board.save!
     @user_attack_board.save!

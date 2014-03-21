@@ -11,9 +11,10 @@ BattleGameServer::Application.routes.draw do
 
   devise_scope :user do
     get "api/v1/login" => 'users#login', :defaults => { :format => :json }
+    get "api/v1/logout" => 'users#logout', :defaults => { :format => :json } #"devise/sessions#destroy", :defaults => {:method => 'delete'}
+
     get "api/v1/available_users" => 'users#index', :defaults => { :format => :json, :available => '1' }
     get "api/v1/all_users" => 'users#index', :defaults => { :format => :json }
-    get "api/v1/logout" => 'users#logout', :defaults => { :format => :json } #"devise/sessions#destroy", :defaults => {:method => 'delete'}
 
     get "api/v1/challenge_computer" => "games#new", :as => 'challenge_computer', :defaults => { :computer => true, :format => :json }
     get "api/v1/challenge" => "games#new", :as => 'challenge', :defaults => { :computer => false, :format => :json }
