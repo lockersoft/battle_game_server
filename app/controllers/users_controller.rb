@@ -7,6 +7,7 @@ class UsersController < ApplicationController
       current_user.available = false
       current_user.online = false
       current_user.gaming = false
+      current_user.save!
     end
     sign_out current_user 
     render json: '"logged out"'
@@ -15,6 +16,7 @@ class UsersController < ApplicationController
   def login
     if current_user
       current_user.available = true
+      current_user.save!
       respond_with User.get_profile(current_user.id)
     else
       render json: '"not authorized"'  # Probably never called as the server will reject bad passwords, etc. at a lower level
