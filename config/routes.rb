@@ -30,6 +30,8 @@ BattleGameServer::Application.routes.draw do
     post "api/v1/game/:id/attack" => "games#attack", :as => 'game_attack_POST', :defaults => { :format => :html }
 
     get "api/v1/game/:id/status/:type" => "games#status", :as => 'game_status', :defaults => { :type => :all, :format => :json }
+    get "api/v1/user/challenge/:other_user_id" => "users#challenge", :as => 'user_challenge', :default => {:type=>:all, :format => :json }
+    get "api/v1/user/test_gcm" => "users#test_gcm", :as => 'user_test_gcm'
   end
 
   devise_for :users

@@ -39,6 +39,7 @@ gem 'jquery-datatables-rails'#, github: 'rweng/jquery-datatables-rails'
 gem 'jquery-ui-rails'
 gem 'paperclip'
 gem 'cocaine', '0.5.3'  # Required for paperclip
+gem 'gcm'
 
 group :development do
   gem "better_errors"

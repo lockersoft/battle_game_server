@@ -68,7 +68,8 @@ class GamesController < ApplicationController
     attackboard_2             = Board.create(width: 10, height: 10)
     defendboard_1             = Board.create(width: 10, height: 10)
     defendboard_2             = Board.create(width: 10, height: 10)
-    @game                     = Game.new(player_id_1:       @user.id, player_id_2: @challenged,
+    @game                     = Game.new(player_id_1:       @user.id,
+                                         player_id_2:       @challenged,
                                          attack_board_id_1: attackboard_1.id,
                                          attack_board_id_2: attackboard_2.id,
                                          defend_board_id_1: defendboard_1.id,
