@@ -126,20 +126,20 @@ e.g. `GET api/v1/game/34/attack/h/3.json`
 Send one attack sequence.
 
 Returns hit/miss in addition to the computer's turn
-```json
+```javascript
 {
   "game_id": 34,
-  "row": "h",          # Your Attack Row/Col
+  "row": "h",          // Your Attack Row/Col
   "col": 3,
-  "hit": true,         # Did your attack hit a ship?
-  "comp_row": "c",     # Computers Attack Row/Col
+  "hit": true,         // Did your attack hit a ship?
+  "comp_row": "c",     // Computers Attack Row/Col
   "comp_col": 5,
-  "comp_hit": false,   # Did the computer hit your ship?
+  "comp_hit": false,   // Did the computer hit your ship?
   "user_ship_sunk": "no",
   "comp_ship_sunk": "cruiser",
   "num_computer_ships_sunk": 3,
   "num_your_ships_sunk": 2,
-  "winner": ""         #"computer", "you"
+  "winner": ""         //"computer", "you"
 }
 ```
 
