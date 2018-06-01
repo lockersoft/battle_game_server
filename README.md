@@ -12,14 +12,17 @@ http://www.hasbro.com/commoninstruct/battleship.pdf
 ## API for Game Play between 2 clients  
 ## API Version 1  
 All API calls must be prefixed with `/api/v1/XXX`
+
 ![API Actions and Return Results](http://battlegameserver.com/api_graph.png)
+
 [API Actions and Return Results](http://battlegameserver.com/api_graph.pdf)
 
-![Attack Sequence](http://battlegameserver.com/attack_sequence.png)  
+![Attack Sequence](http://battlegameserver.com/attack_sequence.png)
+
 [Attack Sequence](http://battlegameserver.com/attack_sequence.pdf)  
 
 ## login  
-`GET /api/v1/login.json`
+**GET `/api/v1/login.json`**
 
 Uses basic authentication to login to the server.
 
@@ -45,22 +48,22 @@ Returns your user profile as a JSON object:
 ```
 
 ## logout  
-`GET /api/v1/logout.json`
+**GET `/api/v1/logout.json`**
 
 Logs the user out from the server.
 
 ## available_players  
-`GET /api/v1/available_users.json`
+**GET `/api/v1/available_users.json`**
 
 Returns list of available players.
 
 ## all_users  
-`GET /api/v1/all_users.json`
+**GET `/api/v1/all_users.json`**
 
 Returns list of ALL players whether they are available or not.
 
 ## available_ships  
-`GET /api/v1/available_ships.json`
+**GET `/api/v1/available_ships.json`**
 
 Returns a list of all of the available ships names and their respective sizes.
 
@@ -75,7 +78,7 @@ Returns a list of all of the available ships names and their respective sizes.
 ```
 
 ## available_directions  
-`GET /api/v1/available_directions.json`
+**GET `/api/v1/available_directions.json`**
 
 Returns a list of all of the available directions for placing ships.
 
@@ -89,7 +92,7 @@ Returns a list of all of the available directions for placing ships.
 ```
 
 ## challenge_computer  
-`GET api/v1/challenge_computer.json`
+**GET `/api/v1/challenge_computer.json`**
 
 Returns the game id which is used in future calls.
 ```json
@@ -99,7 +102,7 @@ Returns the game id which is used in future calls.
 ```
 
 ## add_ship  
-`GET api/v1/game/:id/add_ship/:ship/:row/:col/:direction.json`
+**GET `/api/v1/game/:id/add_ship/:ship/:row/:col/:direction.json`**
 
 e.g. `/api/v1/game/7/add_ship/carrier/b/8/0.json`
 
@@ -119,7 +122,7 @@ e.g. `/api/v1/game/7/add_ship/carrier/b/8/0.json`
 ```
 
 ## attack
-`GET api/v1/game/:id/attack/:row/:col.json`
+**GET `/api/v1/game/:id/attack/:row/:col.json`**
 
 e.g. `GET api/v1/game/34/attack/h/3.json`
 
@@ -144,7 +147,7 @@ Returns hit/miss in addition to the computer's turn
 ```
 
 ## status   
-`GET api/v1/game/:id/status/:type.json`
+**GET `/api/v1/game/:id/status/:type.json`**
 
 e.g. `GET api/v1/game/42/status/all.json`
 
